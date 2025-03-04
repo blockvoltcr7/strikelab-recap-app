@@ -13,12 +13,23 @@ import { getSidebarItems } from "./sidebar-data";
 import { supabase } from "@/integrations/supabase/client";
 import SidebarLink from "./sidebar-link";
 import { ThemeToggle } from "../theme-toggle";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useMobileSidebar } from "./mobile-sidebar";
 
 export default function SidebarBody() {
   const [open, setOpen] = useState<Record<string, boolean>>({});
   const { user } = useAuth();
   const [userRole, setUserRole] = useState<string | undefined>(undefined);
   const location = useLocation();
+  const isMobile = useIsMobile();
+  
+  // Get the setOpen function from the mobile sidebar context if in mobile view
+  let mobileSidebarControl;
+  try {
+    mobileSidebarControl = useMobileSidebar();
+  } catch (error) {
+    // We're not in a mobile sidebar context, that's fine
+  }
 
   useEffect(() => {
     const fetchUserRole = async () => {
@@ -47,6 +58,13 @@ export default function SidebarBody() {
       ...prev,
       [title]: !prev[title],
     }));
+  };
+
+  // Function to close the mobile sidebar
+  const closeMobileSidebar = () => {
+    if (isMobile && mobileSidebarControl) {
+      mobileSidebarControl.setOpen(false);
+    }
   };
 
   const items = getSidebarItems(userRole);
@@ -95,12 +113,13 @@ export default function SidebarBody() {
                     </CollapsibleTrigger>
                     <CollapsibleContent className="ml-4 mt-1 space-y-1">
                       {item.submenu.map((subItem) => (
-                        <SidebarLink
-                          key={subItem.href}
-                          href={subItem.href}
-                          icon={subItem.icon}
-                          label={subItem.title}
-                        />
+                        <div key={subItem.href} onClick={closeMobileSidebar}>
+                          <SidebarLink
+                            href={subItem.href}
+                            icon={subItem.icon}
+                            label={subItem.title}
+                          />
+                        </div>
                       ))}
                     </CollapsibleContent>
                   </Collapsible>
@@ -108,12 +127,13 @@ export default function SidebarBody() {
               }
 
               return (
-                <SidebarLink
-                  key={item.href}
-                  href={item.href}
-                  icon={item.icon}
-                  label={item.title}
-                />
+                <div key={item.href} onClick={closeMobileSidebar}>
+                  <SidebarLink
+                    href={item.href}
+                    icon={item.icon}
+                    label={item.title}
+                  />
+                </div>
               );
             })}
           </div>

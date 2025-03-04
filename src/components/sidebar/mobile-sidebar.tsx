@@ -18,6 +18,11 @@ export const MobileSidebar = ({
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
   
+  // Create context value to pass down to children
+  const mobileSidebarContext = {
+    setOpen
+  };
+  
   return (
     <>
       <div
@@ -62,7 +67,10 @@ export const MobileSidebar = ({
                 <X size={18} />
               </div>
               <div className="h-full overflow-y-auto">
-                {children}
+                {/* Pass the setOpen function to children */}
+                <MobileSidebarContext.Provider value={mobileSidebarContext}>
+                  {children}
+                </MobileSidebarContext.Provider>
               </div>
             </motion.div>
           )}
@@ -70,4 +78,24 @@ export const MobileSidebar = ({
       </div>
     </>
   );
+};
+
+// Create a context to share the setOpen function with child components
+import { createContext, useContext } from "react";
+
+interface MobileSidebarContextType {
+  setOpen: (open: boolean) => void;
+}
+
+const MobileSidebarContext = createContext<MobileSidebarContextType | undefined>(undefined);
+
+// Create a hook to access the mobile sidebar context
+export const useMobileSidebar = () => {
+  const context = useContext(MobileSidebarContext);
+  
+  if (context === undefined) {
+    throw new Error("useMobileSidebar must be used within a MobileSidebar");
+  }
+  
+  return context;
 };
