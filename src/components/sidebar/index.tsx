@@ -140,7 +140,7 @@ export const SidebarLayout = ({
       <div 
         className={cn(
           "flex-1 transition-all duration-300 ease-in-out h-screen overflow-y-auto",
-          isCollapsed ? "ml-16" : "ml-[220px]",
+          isCollapsed ? "ml-16 pl-0" : "ml-[220px] pl-0",
         )}
       >
         <div className="w-full h-full">
