@@ -10,7 +10,7 @@ export default function Home() {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col gap-8 p-6 md:p-8 w-full min-h-screen"
+      className="flex flex-col gap-8 p-6 md:p-8 w-full h-full"
     >
       <div className="space-y-4">
         <h1 className="text-3xl font-bold md:text-4xl">Home</h1>
@@ -93,4 +93,4 @@ const GridItem = ({ area, icon, title, description }: GridItemProps) => {
       </div>
     </li>
   );
-}
+};
