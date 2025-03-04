@@ -50,7 +50,10 @@ const SidebarLink = ({ href, icon, label, className, id, isCollapsed = false }: 
         "relative z-20 flex items-center py-2 px-2",
         isCollapsed ? "justify-center" : "justify-start gap-3"
       )}>
-        {icon}
+        {/* Always show the icon, regardless of collapsed state */}
+        <div className={cn(isCollapsed ? "mx-auto" : "")}>
+          {icon}
+        </div>
 
         {!isCollapsed && (
           <motion.span

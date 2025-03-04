@@ -15,6 +15,7 @@ import SidebarLink from "./sidebar-link";
 import { ThemeToggle } from "../theme-toggle";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useMobileSidebar } from "./mobile-sidebar";
+import { useSidebar } from "./use-sidebar";
 
 export default function SidebarBody() {
   const [open, setOpen] = useState<Record<string, boolean>>({});
@@ -22,6 +23,7 @@ export default function SidebarBody() {
   const [userRole, setUserRole] = useState<string | undefined>(undefined);
   const location = useLocation();
   const isMobile = useIsMobile();
+  const { isCollapsed } = useSidebar();
   
   // Get the setOpen function from the mobile sidebar context if in mobile view
   let mobileSidebarControl;
@@ -102,13 +104,15 @@ export default function SidebarBody() {
                       >
                         <span className="flex items-center gap-2">
                           {item.icon}
-                          {item.title}
+                          {!isCollapsed && item.title}
                         </span>
-                        <ChevronDown
-                          className={`h-4 w-4 transition-transform ${
-                            open[item.title] ? "rotate-180" : ""
-                          }`}
-                        />
+                        {!isCollapsed && (
+                          <ChevronDown
+                            className={`h-4 w-4 transition-transform ${
+                              open[item.title] ? "rotate-180" : ""
+                            }`}
+                          />
+                        )}
                       </Button>
                     </CollapsibleTrigger>
                     <CollapsibleContent className="ml-4 mt-1 space-y-1">
@@ -118,6 +122,7 @@ export default function SidebarBody() {
                             href={subItem.href}
                             icon={subItem.icon}
                             label={subItem.title}
+                            isCollapsed={isCollapsed}
                           />
                         </div>
                       ))}
@@ -132,6 +137,7 @@ export default function SidebarBody() {
                     href={item.href}
                     icon={item.icon}
                     label={item.title}
+                    isCollapsed={isCollapsed}
                   />
                 </div>
               );
@@ -139,20 +145,26 @@ export default function SidebarBody() {
           </div>
         </div>
       </div>
-      <div className="sticky bottom-0 flex items-center justify-between border-t bg-card p-4">
-        <div className="flex items-center space-x-2">
-          <div className="bg-primary h-8 w-8 rounded-full" />
-          <div>
-            <p className="text-sm font-medium">
-              {user?.email ?? "User"}
-            </p>
-            <p className="text-xs text-muted-foreground capitalize">
-              {userRole ?? "loading..."}
-            </p>
+      {!isCollapsed ? (
+        <div className="sticky bottom-0 flex items-center justify-between border-t bg-card p-4">
+          <div className="flex items-center space-x-2">
+            <div className="bg-primary h-8 w-8 rounded-full" />
+            <div>
+              <p className="text-sm font-medium">
+                {user?.email ?? "User"}
+              </p>
+              <p className="text-xs text-muted-foreground capitalize">
+                {userRole ?? "loading..."}
+              </p>
+            </div>
           </div>
+          <ThemeToggle />
         </div>
-        <ThemeToggle />
-      </div>
+      ) : (
+        <div className="sticky bottom-0 flex justify-center border-t bg-card p-4">
+          <ThemeToggle />
+        </div>
+      )}
     </div>
   );
 }
