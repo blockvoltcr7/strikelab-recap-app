@@ -12,6 +12,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { useSidebar } from "./use-sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { DesktopSidebar } from "./desktop-sidebar";
 
 interface SidebarLayoutProps {
   className?: string;
