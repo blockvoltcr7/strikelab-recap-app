@@ -140,7 +140,8 @@ export const SidebarLayout = ({
       <div 
         className={cn(
           "flex-1 transition-all duration-300 ease-in-out",
-          isCollapsed ? "ml-16" : "ml-[220px]" // Changed from ml-[280px] to ml-[220px]
+          isCollapsed ? "ml-16" : "ml-[220px]",
+          "overflow-hidden" // Add this to prevent overflow issues
         )}
       >
         {children}

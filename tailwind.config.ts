@@ -57,7 +57,7 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
+					DEFAULT: 'hsl(var(--sidebar))',
 					foreground: 'hsl(var(--sidebar-foreground))',
 					primary: 'hsl(var(--sidebar-primary))',
 					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
@@ -70,7 +70,8 @@ export default {
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				sm: 'calc(var(--radius) - 4px)',
+				'2.5xl': '1.25rem',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -111,7 +112,13 @@ export default {
 				slideInRight: 'slideInRight 0.3s ease-out',
 				slideOutRight: 'slideOutRight 0.3s ease-out',
 				enter: 'fadeIn 0.3s ease-out, scaleIn 0.2s ease-out'
-			}
+			},
+			borderWidth: {
+				'0.75': '0.75px',
+			},
+			letterSpacing: {
+				'-4': '-0.025em',
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
