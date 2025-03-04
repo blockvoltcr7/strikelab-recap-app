@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { useSidebar } from "./use-sidebar";
 
 interface SidebarLinkProps {
   key?: string;
@@ -16,11 +17,18 @@ interface SidebarLinkProps {
 
 const SidebarLink = ({ href, icon, label, className, id, isCollapsed = false }: SidebarLinkProps) => {
   const [hovered, setHovered] = useState<string | null>(null);
+  const { setIsCollapsed } = useSidebar();
+  
+  const handleClick = () => {
+    // Collapse the sidebar when a link is clicked
+    setIsCollapsed(true);
+  };
   
   return (
     <Link
       to={href}
       className={cn("group relative px-2 py-1", className)}
+      onClick={handleClick}
       onMouseEnter={() => {
         setHovered(id ?? null);
       }}
