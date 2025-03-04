@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
+import { IconUserBolt } from "@tabler/icons-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SidebarBodyProps {
   className?: string;
@@ -15,6 +17,7 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
   const { isCollapsed } = useSidebar();
   const { signOut, user } = useAuth();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   const handleLogout = async () => {
     try {
@@ -78,7 +81,31 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
         </nav>
       </div>
       
-      {/* Logout button - now will be moved to the index.tsx file */}
+      {/* User profile and logout at the bottom */}
+      <div className="mt-auto px-3 pb-4">
+        <SidebarLink
+          link={{
+            label: "User Profile",
+            href: "/profile",
+            icon: (
+              <div className="h-7 w-7 flex-shrink-0 rounded-full bg-sidebar-accent flex items-center justify-center">
+                <IconUserBolt className="h-4 w-4 text-sidebar-accent-foreground" />
+              </div>
+            ),
+          }}
+          id="sidebar-user-profile"
+        />
+        
+        <Button
+          variant="ghost"
+          size="default"
+          onClick={handleLogout}
+          className="w-full justify-start mt-2 text-sidebar-foreground hover:bg-sidebar-accent"
+        >
+          <LogOut className="h-5 w-5 mr-3 text-neutral-700 dark:text-neutral-200" />
+          <span className="text-sm font-medium">Logout</span>
+        </Button>
+      </div>
     </div>
   );
 };

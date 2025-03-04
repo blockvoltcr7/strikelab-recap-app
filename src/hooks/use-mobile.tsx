@@ -13,10 +13,9 @@ export function useIsMobile() {
     
     checkMobile() // Check initially
     
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
-    mql.addEventListener("change", checkMobile)
+    window.addEventListener("resize", checkMobile)
     
-    return () => mql.removeEventListener("change", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
   return isMobile ?? false // Default to false if not determined yet

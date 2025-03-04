@@ -22,7 +22,7 @@ export const MobileSidebar = ({
     <>
       <div
         className={cn(
-          "flex h-14 w-full flex-row items-center justify-between bg-sidebar px-4 py-4 md:hidden",
+          "flex h-14 w-full flex-row items-center justify-between bg-sidebar px-4 py-4",
           "border-b border-sidebar-border",
         )}
       >
