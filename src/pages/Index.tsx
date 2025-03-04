@@ -1,7 +1,7 @@
 
 import { useIsMobile } from "../hooks/use-mobile";
 import { SidebarLayout, MobileSidebar, DesktopSidebar, SidebarBody } from "../components/sidebar";
-import Dashboard from "../components/dashboard/dashboard-content";
+import { Outlet } from "react-router-dom";
 
 const Index = () => {
   const isMobile = useIsMobile();
@@ -14,12 +14,12 @@ const Index = () => {
             <SidebarBody />
           </MobileSidebar>
           <div className="flex-1 overflow-auto">
-            <Dashboard />
+            <Outlet />
           </div>
         </div>
       ) : (
         <SidebarLayout>
-          <Dashboard />
+          <Outlet />
         </SidebarLayout>
       )}
     </>
