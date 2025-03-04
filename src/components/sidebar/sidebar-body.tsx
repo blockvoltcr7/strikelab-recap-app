@@ -1,6 +1,6 @@
 
 import { useSidebar } from "./use-sidebar";
-import { primaryLinks, secondaryLinks, moreMenuLink } from "./sidebar-data";
+import { primaryLinks, secondaryLinks } from "./sidebar-data";
 import SidebarLink from "./sidebar-link";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
@@ -8,8 +8,6 @@ import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { User } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useState } from "react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface SidebarBodyProps {
   className?: string;
@@ -20,7 +18,6 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
   const { signOut, user } = useAuth();
   const { toast } = useToast();
   const isMobile = useIsMobile();
-  const [moreExpanded, setMoreExpanded] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -67,9 +64,9 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
         
         {/* Primary navigation items */}
         <nav className="flex flex-col gap-1">
-          {primaryLinks.map((item, index) => (
+          {primaryLinks.map((item) => (
             <SidebarLink 
-              key={`sidebar-primary-${index}`} 
+              key={item.href} 
               link={item} 
               id={`sidebar-link-${item.href}`} 
             />
@@ -80,41 +77,14 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
             <div className="h-px w-full bg-sidebar-border"></div>
           </div>
           
-          {/* Secondary navigation items or More menu */}
-          {isMobile ? (
-            <Collapsible
-              open={moreExpanded}
-              onOpenChange={setMoreExpanded}
-              className="w-full"
-            >
-              <CollapsibleTrigger asChild>
-                <div className="w-full">
-                  <SidebarLink 
-                    link={moreMenuLink} 
-                    id="sidebar-more-menu"
-                  />
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="ml-4 border-l border-sidebar-border pl-2">
-                {secondaryLinks.map((item, index) => (
-                  <SidebarLink 
-                    key={`sidebar-more-${index}`} 
-                    link={item} 
-                    id={`sidebar-more-${item.href}`}
-                  />
-                ))}
-              </CollapsibleContent>
-            </Collapsible>
-          ) : (
-            // On desktop, show all secondary links normally
-            secondaryLinks.map((item, index) => (
-              <SidebarLink 
-                key={`sidebar-secondary-${index}`} 
-                link={item} 
-                id={`sidebar-link-${item.href}`} 
-              />
-            ))
-          )}
+          {/* Secondary navigation items */}
+          {secondaryLinks.map((item) => (
+            <SidebarLink 
+              key={item.href} 
+              link={item} 
+              id={`sidebar-link-${item.href}`} 
+            />
+          ))}
         </nav>
       </div>
       
