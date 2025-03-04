@@ -13,6 +13,7 @@ import Register from "./pages/auth/Register";
 import NotFound from "./pages/NotFound";
 import VideoLibrary from "./pages/videos/VideoLibrary";
 import VideoCategory from "./pages/videos/VideoCategory";
+import Home from "./pages/home/Home";
 
 const queryClient = new QueryClient();
 
@@ -38,7 +39,7 @@ const App = () => (
                   </ProtectedRoute>
                 } 
               >
-                <Route index element={<Navigate to="/videos" replace />} />
+                <Route index element={<Home />} />
                 <Route path="videos" element={<VideoLibrary />} />
                 <Route path="videos/:categoryId" element={<VideoCategory />} />
               </Route>

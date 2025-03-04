@@ -1,112 +1,96 @@
 
-import { motion } from "framer-motion";
-import { Shield, Zap, Target, Users, Video } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+"use client";
 
-const Home = () => {
+import { Box, Lock, Search, Settings, Sparkles } from "lucide-react";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { motion } from "framer-motion";
+
+export default function Home() {
   return (
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="flex flex-col gap-8 p-6 md:p-8"
     >
-      {/* Hero Section */}
-      <section className="relative rounded-lg bg-gradient-to-br from-red-900/40 to-orange-900/20 p-8 text-white">
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-col gap-4"
-        >
-          <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
-            Welcome to Strike Lab
-          </h1>
-          <p className="max-w-2xl text-lg text-gray-200">
-            Your premier destination for boxing and martial arts training in Falls Church, VA. 
-            Train smarter, get stronger, and join our community of fighters.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Button size="lg" className="bg-red-600 hover:bg-red-700">
-              Start Training
-            </Button>
-            <Button size="lg" variant="outline">
-              View Schedule
-            </Button>
-          </div>
-        </motion.div>
-      </section>
+      <div className="space-y-4">
+        <h1 className="text-3xl font-bold md:text-4xl">Home</h1>
+        <p className="text-muted-foreground">Welcome to the Boxing Gym App</p>
+      </div>
 
-      {/* Features Grid */}
-      <motion.section 
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
-      >
-        {[
-          {
-            icon: <Shield className="h-6 w-6" />,
-            title: "Expert Training",
-            description: "Learn from certified boxing and martial arts instructors"
-          },
-          {
-            icon: <Zap className="h-6 w-6" />,
-            title: "High-Intensity",
-            description: "Dynamic workouts that push your limits"
-          },
-          {
-            icon: <Target className="h-6 w-6" />,
-            title: "Focused Goals",
-            description: "Personalized training plans for all skill levels"
-          },
-          {
-            icon: <Users className="h-6 w-6" />,
-            title: "Community",
-            description: "Join a supportive community of fighters"
-          }
-        ].map((feature, index) => (
-          <motion.div
-            key={feature.title}
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4 + index * 0.1 }}
-            className="flex flex-col gap-4 rounded-lg bg-card p-6 shadow-lg"
-          >
-            <div className="rounded-full bg-primary/10 p-3 w-fit">
-              {feature.icon}
-            </div>
-            <h3 className="text-xl font-semibold">{feature.title}</h3>
-            <p className="text-muted-foreground">{feature.description}</p>
-          </motion.div>
-        ))}
-      </motion.section>
+      <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2">
+        <GridItem
+          area="md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
+          icon={<Box className="h-4 w-4 text-black dark:text-neutral-400" />}
+          title="Quick Access"
+          description="Access your training videos and resources in one place."
+        />
 
-      {/* Video Library Promo */}
-      <motion.section
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="relative overflow-hidden rounded-lg bg-card p-8"
-      >
-        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold md:text-3xl">Training Videos</h2>
-            <p className="max-w-xl text-muted-foreground">
-              Access our library of technique videos, class recaps, and training tips. 
-              Perfect your form and stay consistent with your training.
-            </p>
-          </div>
-          <Link to="/videos">
-            <Button size="lg" className="gap-2">
-              <Video className="h-5 w-5" />
-              Browse Library
-            </Button>
-          </Link>
-        </div>
-      </motion.section>
+        <GridItem
+          area="md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]"
+          icon={<Settings className="h-4 w-4 text-black dark:text-neutral-400" />}
+          title="Personalized Training"
+          description="Custom training programs designed for your skill level."
+        />
+
+        <GridItem
+          area="md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]"
+          icon={<Lock className="h-4 w-4 text-black dark:text-neutral-400" />}
+          title="Premium Content"
+          description="Unlock exclusive training videos and techniques."
+        />
+
+        <GridItem
+          area="md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]"
+          icon={<Sparkles className="h-4 w-4 text-black dark:text-neutral-400" />}
+          title="Progress Tracking"
+          description="Monitor your improvement and skill development over time."
+        />
+
+        <GridItem
+          area="md:[grid-area:3/1/4/13] xl:[grid-area:2/8/3/13]"
+          icon={<Search className="h-4 w-4 text-black dark:text-neutral-400" />}
+          title="Find Your Path"
+          description="Discover new training programs and challenges to push your limits."
+        />
+      </ul>
     </motion.div>
   );
-};
+}
 
-export default Home;
+interface GridItemProps {
+  area: string;
+  icon: React.ReactNode;
+  title: string;
+  description: React.ReactNode;
+}
+
+const GridItem = ({ area, icon, title, description }: GridItemProps) => {
+  return (
+    <li className={`min-h-[14rem] list-none ${area}`}>
+      <div className="relative h-full rounded-2.5xl border p-2 md:rounded-3xl md:p-3">
+        <GlowingEffect
+          spread={40}
+          glow={true}
+          disabled={false}
+          proximity={64}
+          inactiveZone={0.01}
+        />
+        <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-0.75 p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D] md:p-6">
+          <div className="relative flex flex-1 flex-col justify-between gap-3">
+            <div className="w-fit rounded-lg border border-gray-600 p-2">
+              {icon}
+            </div>
+            <div className="space-y-3">
+              <h3 className="pt-0.5 text-xl/[1.375rem] font-semibold font-sans -tracking-4 md:text-2xl/[1.875rem] text-balance text-black dark:text-white">
+                {title}
+              </h3>
+              <h2 className="[&_b]:md:font-semibold [&_strong]:md:font-semibold font-sans text-sm/[1.125rem] md:text-base/[1.375rem] text-black dark:text-neutral-400">
+                {description}
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  );
+};
