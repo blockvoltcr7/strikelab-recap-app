@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { AuthProvider } from "@/contexts/auth-context";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import Home from "./pages/home/Home";
 import Index from "./pages/Index";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -36,9 +35,7 @@ const App = () => (
                     <Index />
                   </ProtectedRoute>
                 } 
-              >
-                <Route index element={<Home />} />
-              </Route>
+              />
               
               {/* 404 Route */}
               <Route path="*" element={<NotFound />} />
