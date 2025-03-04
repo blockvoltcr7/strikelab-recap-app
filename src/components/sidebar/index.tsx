@@ -4,7 +4,7 @@ import { SidebarBody } from "./sidebar-body";
 import { Logo, LogoIcon } from "./logo";
 import SidebarLink from "./sidebar-link";
 import { primaryLinks, secondaryLinks } from "./sidebar-data";
-import { IconUserBolt } from "@tabler/icons-react";
+import { User } from "lucide-react";
 import { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { LogOut, ChevronLeft, ChevronRight } from "lucide-react";
@@ -69,7 +69,14 @@ export const SidebarLayout = ({
         <DesktopSidebar isCollapsed={isCollapsed}>
           <SidebarBodyWrapper className="justify-between gap-10">
             <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-              {isCollapsed ? <LogoIcon /> : <Logo />}
+              <div className="flex items-center">
+                {isCollapsed ? <LogoIcon /> : (
+                  <div className="flex items-center">
+                    <Logo />
+                    <span className="ml-2 font-bold text-sidebar-foreground">Strike Lab</span>
+                  </div>
+                )}
+              </div>
               <div className="mt-8 flex flex-col">
                 {primaryLinks.map((link, idx) => (
                   <SidebarLink 
@@ -102,7 +109,7 @@ export const SidebarLayout = ({
                   href: "/profile",
                   icon: (
                     <div className="h-7 w-7 flex-shrink-0 rounded-full bg-sidebar-accent dark:bg-sidebar-accent flex items-center justify-center">
-                      <IconUserBolt className="h-4 w-4 text-sidebar-accent-foreground" />
+                      <User className="h-4 w-4 text-sidebar-accent-foreground" />
                     </div>
                   ),
                 }}

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import { X, Menu } from "lucide-react";
 import { LogoIcon } from "./logo";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -26,9 +26,12 @@ export const MobileSidebar = ({
           "border-b border-sidebar-border",
         )}
       >
-        <LogoIcon />
-        <div className="z-20 flex w-full justify-end">
-          <IconMenu2
+        <div className="flex items-center">
+          <LogoIcon />
+          <span className="ml-2 font-bold text-sidebar-foreground">Strike Lab</span>
+        </div>
+        <div className="z-20 flex justify-end">
+          <Menu
             className="h-6 w-6 cursor-pointer text-sidebar-foreground"
             onClick={() => {
               setOpen(true);
@@ -57,7 +60,7 @@ export const MobileSidebar = ({
                   setOpen(false);
                 }}
               >
-                <IconX size={18} />
+                <X size={18} />
               </div>
               <div className="h-full overflow-y-auto">
                 {children}

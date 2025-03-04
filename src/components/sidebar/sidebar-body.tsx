@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
-import { IconUserBolt } from "@tabler/icons-react";
+import { User } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SidebarBodyProps {
@@ -39,6 +39,13 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
   return (
     <div className={`flex h-full flex-1 flex-col justify-between overflow-hidden ${className}`}>
       <div className="flex-1 overflow-auto px-3 py-2">
+        {/* App title for mobile */}
+        {isMobile && (
+          <div className="mb-6 mt-2 text-xl font-bold text-sidebar-foreground">
+            Strike Lab
+          </div>
+        )}
+        
         {/* User info */}
         {user && (
           <div className="mb-4 flex items-center space-x-2 rounded-lg bg-sidebar-accent p-2">
@@ -89,7 +96,7 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
             href: "/profile",
             icon: (
               <div className="h-7 w-7 flex-shrink-0 rounded-full bg-sidebar-accent flex items-center justify-center">
-                <IconUserBolt className="h-4 w-4 text-sidebar-accent-foreground" />
+                <User className="h-4 w-4 text-sidebar-accent-foreground" />
               </div>
             ),
           }}
