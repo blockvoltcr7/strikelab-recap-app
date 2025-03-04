@@ -1,118 +1,138 @@
 
-import { useSidebar } from "./use-sidebar";
-import { primaryLinks, secondaryLinks } from "./sidebar-data";
-import SidebarLink from "./sidebar-link";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
-import { useToast } from "@/hooks/use-toast";
-import { User } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { getSidebarItems } from "./sidebar-data";
+import { supabase } from "@/integrations/supabase/client";
+import SidebarLink from "./sidebar-link";
+import ThemeToggle from "../theme-toggle";
 
-interface SidebarBodyProps {
-  className?: string;
-}
+export default function SidebarBody() {
+  const [open, setOpen] = useState<Record<string, boolean>>({});
+  const { user } = useAuth();
+  const [userRole, setUserRole] = useState<string | undefined>(undefined);
+  const location = useLocation();
 
-export const SidebarBody = ({ className }: SidebarBodyProps) => {
-  const { isCollapsed } = useSidebar();
-  const { signOut, user } = useAuth();
-  const { toast } = useToast();
-  const isMobile = useIsMobile();
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      if (!user) return;
+      
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+          
+        if (error) throw error;
+        
+        setUserRole(data.role);
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      }
+    };
+    
+    fetchUserRole();
+  }, [user]);
 
-  const handleLogout = async () => {
-    try {
-      await signOut();
-      toast({
-        title: "Logged out",
-        description: "You have been successfully logged out",
-      });
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Logout failed",
-        description: "There was an error logging you out. Please try again.",
-      });
-      console.error("Logout error:", error);
-    }
+  const toggleSubmenu = (title: string) => {
+    setOpen((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
   };
 
+  const items = getSidebarItems(userRole);
+
   return (
-    <div className={`flex h-full flex-1 flex-col justify-between overflow-hidden ${className}`}>
-      <div className="flex-1 overflow-auto px-3 py-2">
-        {/* App title for mobile */}
-        {isMobile && (
-          <div className="mb-6 mt-2 text-xl font-bold text-sidebar-foreground">
-            STRIKE LAB
+    <div className="flex h-full w-full flex-col justify-between overflow-auto">
+      <div className="flex-1 py-8">
+        <div className="px-3 py-2">
+          <div className="mt-3 space-y-1">
+            {items.map((item) => {
+              // Skip items that require specific roles if user doesn't have it
+              if (
+                item.requiredRole && 
+                userRole && 
+                !item.requiredRole.includes(userRole)
+              ) {
+                return null;
+              }
+
+              if (item.submenu) {
+                return (
+                  <Collapsible
+                    key={item.title}
+                    open={open[item.title]}
+                    onOpenChange={() => toggleSubmenu(item.title)}
+                  >
+                    <CollapsibleTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className={`w-full justify-between px-2 hover:bg-accent ${
+                          location.pathname.startsWith(item.href)
+                            ? "bg-accent"
+                            : ""
+                        }`}
+                      >
+                        <span className="flex items-center gap-2">
+                          {item.icon}
+                          {item.title}
+                        </span>
+                        <ChevronDown
+                          className={`h-4 w-4 transition-transform ${
+                            open[item.title] ? "rotate-180" : ""
+                          }`}
+                        />
+                      </Button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="ml-4 mt-1 space-y-1">
+                      {item.submenu.map((subItem) => (
+                        <SidebarLink
+                          key={subItem.href}
+                          href={subItem.href}
+                          icon={subItem.icon}
+                          label={subItem.title}
+                        />
+                      ))}
+                    </CollapsibleContent>
+                  </Collapsible>
+                );
+              }
+
+              return (
+                <SidebarLink
+                  key={item.href}
+                  href={item.href}
+                  icon={item.icon}
+                  label={item.title}
+                />
+              );
+            })}
           </div>
-        )}
-        
-        {/* User info */}
-        {user && (
-          <div className="mb-4 flex items-center space-x-2 rounded-lg bg-sidebar-accent p-2">
-            <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center">
-              <span className="text-xs font-medium text-primary-foreground">
-                {user.email?.charAt(0).toUpperCase() || "U"}
-              </span>
-            </div>
-            {!isCollapsed && (
-              <div className="flex-1 truncate">
-                <p className="truncate text-sm font-medium">{user.email}</p>
-              </div>
-            )}
-          </div>
-        )}
-        
-        {/* Primary navigation items */}
-        <nav className="flex flex-col gap-1">
-          {primaryLinks.map((item) => (
-            <SidebarLink 
-              key={item.href} 
-              link={item} 
-              id={`sidebar-link-${item.href}`} 
-            />
-          ))}
-          
-          {/* Divider */}
-          <div className="my-2">
-            <div className="h-px w-full bg-sidebar-border"></div>
-          </div>
-          
-          {/* Secondary navigation items */}
-          {secondaryLinks.map((item) => (
-            <SidebarLink 
-              key={item.href} 
-              link={item} 
-              id={`sidebar-link-${item.href}`} 
-            />
-          ))}
-        </nav>
+        </div>
       </div>
-      
-      {/* User profile and logout at the bottom */}
-      <div className="mt-auto px-3 pb-4">
-        <SidebarLink
-          link={{
-            label: "User Profile",
-            href: "/profile",
-            icon: (
-              <div className="h-7 w-7 flex-shrink-0 rounded-full bg-sidebar-accent flex items-center justify-center">
-                <User className="h-4 w-4 text-sidebar-accent-foreground" />
-              </div>
-            ),
-          }}
-          id="sidebar-user-profile"
-        />
-        
-        <Button
-          variant="ghost"
-          size="default"
-          onClick={handleLogout}
-          className="w-full justify-start mt-2 text-sidebar-foreground hover:bg-sidebar-accent"
-        >
-          <LogOut className="h-5 w-5 mr-3 text-neutral-700 dark:text-neutral-200" />
-          <span className="text-sm font-medium">Logout</span>
-        </Button>
+      <div className="sticky bottom-0 flex items-center justify-between border-t bg-card p-4">
+        <div className="flex items-center space-x-2">
+          <div className="bg-primary h-8 w-8 rounded-full" />
+          <div>
+            <p className="text-sm font-medium">
+              {user?.email ?? "User"}
+            </p>
+            <p className="text-xs text-muted-foreground capitalize">
+              {userRole ?? "loading..."}
+            </p>
+          </div>
+        </div>
+        <ThemeToggle />
       </div>
     </div>
   );
-};
+}

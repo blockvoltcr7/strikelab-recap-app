@@ -1,34 +1,71 @@
+
 import {
-  Home,
+  LayoutDashboard,
+  Library,
+  Upload,
+  Settings,
   Video,
 } from "lucide-react";
 
-export interface SidebarLinkType {
-  label: string;
+interface SidebarItem {
+  title: string;
   href: string;
-  icon: React.ReactNode;
+  icon: JSX.Element;
+  submenu?: Omit<SidebarItem, "submenu">[];
+  requiredRole?: string[];
 }
 
-// Primary navigation links shown at the top of the sidebar
-export const primaryLinks: SidebarLinkType[] = [
-  {
-    label: "Home",
-    href: "/",
-    icon: (
-      <Home className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
-  {
-    label: "Video Library",
-    href: "/videos",
-    icon: (
-      <Video className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
-];
+export const getSidebarItems = (userRole?: string): SidebarItem[] => {
+  const items: SidebarItem[] = [
+    {
+      title: "Dashboard",
+      href: "/",
+      icon: <LayoutDashboard className="h-5 w-5" />,
+    },
+    {
+      title: "Video Library",
+      href: "/videos",
+      icon: <Library className="h-5 w-5" />,
+      submenu: [
+        {
+          title: "Boxing",
+          href: "/videos/boxing",
+          icon: <Video className="h-5 w-5" />,
+        },
+        {
+          title: "Muay Thai",
+          href: "/videos/muay-thai",
+          icon: <Video className="h-5 w-5" />,
+        },
+        {
+          title: "Sparring",
+          href: "/videos/sparring",
+          icon: <Video className="h-5 w-5" />,
+        },
+        {
+          title: "Junior Champs",
+          href: "/videos/junior-champs",
+          icon: <Video className="h-5 w-5" />,
+        },
+      ],
+    }
+  ];
 
-// Secondary navigation links shown below the divider
-export const secondaryLinks: SidebarLinkType[] = [];
+  // Add admin/coach only items
+  if (userRole === 'admin' || userRole === 'coach') {
+    items.push({
+      title: "Video Management",
+      href: "/admin/videos/upload",
+      icon: <Upload className="h-5 w-5" />,
+      requiredRole: ['admin', 'coach'],
+    });
+  }
 
-// For backward compatibility, keep SIDEBAR_ITEMS export
-export const SIDEBAR_ITEMS: SidebarLinkType[] = [...primaryLinks, ...secondaryLinks];
+  items.push({
+    title: "Settings",
+    href: "/settings",
+    icon: <Settings className="h-5 w-5" />,
+  });
+
+  return items;
+};
