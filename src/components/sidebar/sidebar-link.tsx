@@ -14,9 +14,10 @@ interface SidebarLinkProps {
   link: LinkProps;
   className?: string;
   id?: string;
+  isCollapsed?: boolean;
 }
 
-const SidebarLink = ({ link, className, id }: SidebarLinkProps) => {
+const SidebarLink = ({ link, className, id, isCollapsed = false }: SidebarLinkProps) => {
   const [hovered, setHovered] = useState<string | null>(null);
   
   return (
@@ -40,19 +41,24 @@ const SidebarLink = ({ link, className, id }: SidebarLinkProps) => {
           transition={{ duration: 0.15 }}
         />
       )}
-      <div className="relative z-20 flex items-center justify-start gap-3 py-2 px-2">
+      <div className={cn(
+        "relative z-20 flex items-center py-2 px-2",
+        isCollapsed ? "justify-center" : "justify-start gap-3"
+      )}>
         {link.icon}
 
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            transition: { delay: 0.1 }
-          }}
-          className="inline-block whitespace-pre text-sm font-medium text-sidebar-foreground transition duration-150 group-hover:translate-x-1"
-        >
-          {link.label}
-        </motion.span>
+        {!isCollapsed && (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: { delay: 0.1 }
+            }}
+            className="inline-block whitespace-pre text-sm font-medium text-sidebar-foreground transition duration-150 group-hover:translate-x-1"
+          >
+            {link.label}
+          </motion.span>
+        )}
       </div>
     </Link>
   );

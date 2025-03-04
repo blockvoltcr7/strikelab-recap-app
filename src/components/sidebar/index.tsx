@@ -1,13 +1,13 @@
 
 import { cn } from "@/lib/utils";
 import { SidebarBody } from "./sidebar-body";
-import { Logo } from "./logo";
+import { Logo, LogoIcon } from "./logo";
 import SidebarLink from "./sidebar-link";
 import { primaryLinks, secondaryLinks } from "./sidebar-data";
 import { IconUserBolt } from "@tabler/icons-react";
 import { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { LogOut, ChevronLeft, ChevronRight } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { useSidebar } from "./use-sidebar";
@@ -34,7 +34,7 @@ export const SidebarLayout = ({
 }: SidebarLayoutProps) => {
   const { signOut } = useAuth();
   const { toast } = useToast();
-  const { isCollapsed } = useSidebar();
+  const { isCollapsed, setIsCollapsed } = useSidebar();
   const isMobile = useIsMobile();
 
   const handleLogout = async () => {
@@ -54,6 +54,10 @@ export const SidebarLayout = ({
     }
   };
 
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   return (
     <div
       className={cn(
@@ -62,13 +66,18 @@ export const SidebarLayout = ({
       )}
     >
       <Sidebar>
-        <DesktopSidebar>
+        <DesktopSidebar isCollapsed={isCollapsed}>
           <SidebarBodyWrapper className="justify-between gap-10">
             <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-              <Logo />
+              {isCollapsed ? <LogoIcon /> : <Logo />}
               <div className="mt-8 flex flex-col">
                 {primaryLinks.map((link, idx) => (
-                  <SidebarLink key={idx} link={link} id={`primary-link-${idx}`} />
+                  <SidebarLink 
+                    key={idx} 
+                    link={link} 
+                    id={`primary-link-${idx}`} 
+                    isCollapsed={isCollapsed}
+                  />
                 ))}
               </div>
               <div className="mt-4">
@@ -81,6 +90,7 @@ export const SidebarLayout = ({
                     key={idx}
                     link={link}
                     id={`secondary-link-${idx}`}
+                    isCollapsed={isCollapsed}
                   />
                 ))}
               </div>
@@ -96,6 +106,7 @@ export const SidebarLayout = ({
                     </div>
                   ),
                 }}
+                isCollapsed={isCollapsed}
               />
               
               {/* Logout button with matching styling */}
@@ -110,10 +121,31 @@ export const SidebarLayout = ({
               </Button>
             </div>
           </SidebarBodyWrapper>
+          
+          {/* Collapse toggle button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleSidebar}
+            className="absolute -right-3 top-4 z-30 h-6 w-6 rounded-full border border-sidebar-border bg-sidebar shadow-md"
+          >
+            {isCollapsed ? (
+              <ChevronRight className="h-3 w-3" />
+            ) : (
+              <ChevronLeft className="h-3 w-3" />
+            )}
+          </Button>
         </DesktopSidebar>
       </Sidebar>
 
-      {children}
+      <div 
+        className={cn(
+          "flex-1 transition-all duration-300 ease-in-out",
+          isCollapsed ? "ml-16" : "ml-[280px]"
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 };
