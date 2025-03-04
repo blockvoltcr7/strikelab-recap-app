@@ -1,17 +1,21 @@
 
 import { useSidebar } from "./use-sidebar";
 import { SIDEBAR_ITEMS } from "./sidebar-data";
-import { SidebarLink } from "./sidebar-link";
+import SidebarLink from "./sidebar-link";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 
-export const SidebarBody = () => {
+interface SidebarBodyProps {
+  className?: string;
+}
+
+export const SidebarBody = ({ className }: SidebarBodyProps) => {
   const { isCollapsed } = useSidebar();
   const { signOut, user } = useAuth();
 
   return (
-    <div className="flex h-full flex-1 flex-col justify-between overflow-hidden">
+    <div className={`flex h-full flex-1 flex-col justify-between overflow-hidden ${className}`}>
       <div className="flex-1 overflow-auto px-3 py-2">
         {/* User info */}
         {user && (
@@ -32,7 +36,11 @@ export const SidebarBody = () => {
         {/* Navigation items */}
         <nav className="flex flex-col gap-1">
           {SIDEBAR_ITEMS.map((item) => (
-            <SidebarLink key={item.href} href={item.href} label={item.label} icon={item.icon} />
+            <SidebarLink 
+              key={item.href} 
+              link={item} 
+              id={`sidebar-link-${item.href}`} 
+            />
           ))}
         </nav>
       </div>

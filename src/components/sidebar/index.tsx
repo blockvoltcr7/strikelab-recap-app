@@ -5,14 +5,26 @@ import { Logo } from "./logo";
 import SidebarLink from "./sidebar-link";
 import { primaryLinks, secondaryLinks } from "./sidebar-data";
 import { IconUserBolt } from "@tabler/icons-react";
+import { ReactNode } from "react";
+
+interface SidebarLayoutProps {
+  className?: string;
+  children: ReactNode;
+}
+
+interface SidebarProps {
+  children: ReactNode;
+}
+
+interface SidebarBodyWrapperProps {
+  children: ReactNode;
+  className?: string;
+}
 
 export const SidebarLayout = ({
   className,
   children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
+}: SidebarLayoutProps) => {
   return (
     <div
       className={cn(
@@ -21,7 +33,7 @@ export const SidebarLayout = ({
       )}
     >
       <Sidebar>
-        <SidebarBody className="justify-between gap-10">
+        <SidebarBodyWrapper className="justify-between gap-10">
           <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
             <Logo />
             <div className="mt-8 flex flex-col">
@@ -56,7 +68,7 @@ export const SidebarLayout = ({
               }}
             />
           </div>
-        </SidebarBody>
+        </SidebarBodyWrapper>
       </Sidebar>
 
       {children}
@@ -64,8 +76,12 @@ export const SidebarLayout = ({
   );
 };
 
-export const Sidebar = ({ children }: { children: React.ReactNode }) => {
+export const Sidebar = ({ children }: SidebarProps) => {
   return <>{children}</>;
+};
+
+const SidebarBodyWrapper = ({ children, className }: SidebarBodyWrapperProps) => {
+  return <div className={className}>{children}</div>;
 };
 
 export { Logo, LogoIcon } from "./logo";

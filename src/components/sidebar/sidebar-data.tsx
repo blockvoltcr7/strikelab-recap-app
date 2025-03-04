@@ -10,13 +10,13 @@ import {
   IconUserBolt,
 } from "@tabler/icons-react";
 
-export interface SidebarLink {
+export interface SidebarLinkType {
   label: string;
   href: string;
   icon: React.ReactNode;
 }
 
-export const primaryLinks: SidebarLink[] = [
+export const SIDEBAR_ITEMS: SidebarLinkType[] = [
   {
     label: "Home",
     href: "/",
@@ -45,9 +45,6 @@ export const primaryLinks: SidebarLink[] = [
       <IconArrowLeft className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
     ),
   },
-];
-
-export const secondaryLinks: SidebarLink[] = [
   {
     label: "Documentation",
     href: "/docs",
