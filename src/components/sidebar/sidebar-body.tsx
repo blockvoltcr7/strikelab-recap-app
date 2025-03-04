@@ -78,18 +78,7 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
         </nav>
       </div>
       
-      {/* Sign out button */}
-      <div className="p-3">
-        <Button
-          variant="outline"
-          size={isCollapsed ? "icon" : "default"}
-          onClick={handleLogout}
-          className="w-full justify-start bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:hover:bg-red-900/30 border-red-200 dark:border-red-800 text-red-600 dark:text-red-400"
-        >
-          <LogOut className={`h-4 w-4 ${isCollapsed ? "" : "mr-2"}`} />
-          {!isCollapsed && <span>Logout</span>}
-        </Button>
-      </div>
+      {/* Logout button - now will be moved to the index.tsx file */}
     </div>
   );
 };

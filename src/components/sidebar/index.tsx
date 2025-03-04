@@ -6,6 +6,11 @@ import SidebarLink from "./sidebar-link";
 import { primaryLinks, secondaryLinks } from "./sidebar-data";
 import { IconUserBolt } from "@tabler/icons-react";
 import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/auth-context";
+import { useToast } from "@/hooks/use-toast";
+import { useSidebar } from "./use-sidebar";
 
 interface SidebarLayoutProps {
   className?: string;
@@ -25,6 +30,27 @@ export const SidebarLayout = ({
   className,
   children,
 }: SidebarLayoutProps) => {
+  const { signOut } = useAuth();
+  const { toast } = useToast();
+  const { isCollapsed } = useSidebar();
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Logged out",
+        description: "You have been successfully logged out",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Logout failed",
+        description: "There was an error logging you out. Please try again.",
+      });
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -55,7 +81,7 @@ export const SidebarLayout = ({
               ))}
             </div>
           </div>
-          <div>
+          <div className="flex flex-col gap-2 px-2">
             <SidebarLink
               link={{
                 label: "User Profile",
@@ -67,6 +93,17 @@ export const SidebarLayout = ({
                 ),
               }}
             />
+            
+            {/* Logout button with matching styling */}
+            <Button
+              variant="ghost"
+              size={isCollapsed ? "icon" : "default"}
+              onClick={handleLogout}
+              className="w-full justify-start px-2 py-2 text-sidebar-foreground hover:bg-sidebar-accent"
+            >
+              <LogOut className="h-5 w-5 mr-3 text-neutral-700 dark:text-neutral-200" />
+              {!isCollapsed && <span className="text-sm font-medium">Logout</span>}
+            </Button>
           </div>
         </SidebarBodyWrapper>
       </Sidebar>
@@ -81,7 +118,7 @@ export const Sidebar = ({ children }: SidebarProps) => {
 };
 
 const SidebarBodyWrapper = ({ children, className }: SidebarBodyWrapperProps) => {
-  return <div className={className}>{children}</div>;
+  return <div className={cn("flex flex-col h-full", className)}>{children}</div>;
 };
 
 export { Logo, LogoIcon } from "./logo";
