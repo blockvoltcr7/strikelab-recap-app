@@ -8,6 +8,7 @@ interface LinkProps {
   label: string;
   href: string;
   icon: React.ReactNode;
+  mobileVisible?: boolean;
 }
 
 interface SidebarLinkProps {
@@ -15,10 +16,17 @@ interface SidebarLinkProps {
   className?: string;
   id?: string;
   isCollapsed?: boolean;
+  onClick?: () => void;
 }
 
-const SidebarLink = ({ link, className, id, isCollapsed = false }: SidebarLinkProps) => {
+const SidebarLink = ({ link, className, id, isCollapsed = false, onClick }: SidebarLinkProps) => {
   const [hovered, setHovered] = useState<string | null>(null);
+  
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
   
   return (
     <Link
@@ -30,6 +38,7 @@ const SidebarLink = ({ link, className, id, isCollapsed = false }: SidebarLinkPr
       onMouseLeave={() => {
         setHovered(null);
       }}
+      onClick={handleClick}
     >
       {hovered === id && (
         <motion.div
