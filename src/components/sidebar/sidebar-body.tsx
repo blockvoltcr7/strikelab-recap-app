@@ -5,6 +5,7 @@ import SidebarLink from "./sidebar-link";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
+import { useToast } from "@/hooks/use-toast";
 
 interface SidebarBodyProps {
   className?: string;
@@ -13,6 +14,24 @@ interface SidebarBodyProps {
 export const SidebarBody = ({ className }: SidebarBodyProps) => {
   const { isCollapsed } = useSidebar();
   const { signOut, user } = useAuth();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Logged out",
+        description: "You have been successfully logged out",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Logout failed",
+        description: "There was an error logging you out. Please try again.",
+      });
+      console.error("Logout error:", error);
+    }
+  };
 
   return (
     <div className={`flex h-full flex-1 flex-col justify-between overflow-hidden ${className}`}>
@@ -64,11 +83,11 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
         <Button
           variant="outline"
           size={isCollapsed ? "icon" : "default"}
-          onClick={signOut}
-          className="w-full justify-start"
+          onClick={handleLogout}
+          className="w-full justify-start bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:hover:bg-red-900/30 border-red-200 dark:border-red-800 text-red-600 dark:text-red-400"
         >
           <LogOut className={`h-4 w-4 ${isCollapsed ? "" : "mr-2"}`} />
-          {!isCollapsed && <span>Sign out</span>}
+          {!isCollapsed && <span>Logout</span>}
         </Button>
       </div>
     </div>
