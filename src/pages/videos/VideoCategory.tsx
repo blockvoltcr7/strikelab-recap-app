@@ -97,6 +97,12 @@ const VideoCategory = () => {
     }
   };
 
+  // Generate video URL from file path
+  const getVideoUrl = (filePath: string) => {
+    const { data } = supabase.storage.from('videos').getPublicUrl(filePath);
+    return data.publicUrl;
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -133,7 +139,7 @@ const VideoCategory = () => {
           <Card>
             <CardContent className="p-0 overflow-hidden">
               <VideoPlayer 
-                url={`${supabase.storageUrl}/object/public/videos/${selectedVideo.file_path}`}
+                url={getVideoUrl(selectedVideo.file_path)}
                 title={selectedVideo.title}
               />
             </CardContent>
@@ -162,7 +168,7 @@ const VideoCategory = () => {
                 <div className="aspect-video bg-black flex justify-center items-center">
                   {video.thumbnail_path ? (
                     <img 
-                      src={`${supabase.storageUrl}/object/public/videos/${video.thumbnail_path}`}
+                      src={getVideoUrl(video.thumbnail_path)}
                       alt={video.title}
                       className="w-full h-full object-cover"
                     />

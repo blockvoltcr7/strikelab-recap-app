@@ -2,7 +2,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Upload, Trash2, Video } from "lucide-react";
+import { ArrowLeft, Upload, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -51,14 +51,20 @@ const VideoManager = () => {
       const fileExt = videoFile.name.split('.').pop();
       const filePath = `${user.id}/${Date.now()}.${fileExt}`;
       
+      // Set up an upload progress tracker
+      const xhr = new XMLHttpRequest();
+      xhr.upload.addEventListener('progress', (event) => {
+        if (event.lengthComputable) {
+          setProgress(Math.round((event.loaded / event.total) * 100));
+        }
+      });
+      
+      // Upload the file
       const { error: uploadError, data: fileData } = await supabase.storage
         .from('videos')
         .upload(filePath, videoFile, {
           cacheControl: '3600',
           upsert: false,
-          onUploadProgress: (progress) => {
-            setProgress(Math.round((progress.loaded / progress.total) * 100));
-          },
         });
         
       if (uploadError) throw uploadError;
