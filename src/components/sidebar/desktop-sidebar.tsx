@@ -1,10 +1,11 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { SidebarBody } from "./sidebar-body";
 
 interface DesktopSidebarProps {
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export const DesktopSidebar = ({
@@ -27,7 +28,7 @@ export const DesktopSidebar = ({
         }}
         {...props}
       >
-        {children}
+        {children || <SidebarBody />}
       </motion.div>
     </>
   );

@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import { SidebarBody } from "./sidebar-body";
 import { Logo } from "./logo";
 import SidebarLink from "./sidebar-link";
-import { primaryLinks, secondaryLinks } from "./sidebar-data";
 import { IconUserBolt } from "@tabler/icons-react";
 import { ReactNode } from "react";
 
@@ -33,42 +32,7 @@ export const SidebarLayout = ({
       )}
     >
       <Sidebar>
-        <SidebarBodyWrapper className="justify-between gap-10">
-          <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-            <Logo />
-            <div className="mt-8 flex flex-col">
-              {primaryLinks.map((link, idx) => (
-                <SidebarLink key={idx} link={link} id={`primary-link-${idx}`} />
-              ))}
-            </div>
-            <div className="mt-4">
-              <div className="h-px w-full bg-sidebar-border"></div>
-              <div className="h-px w-full bg-sidebar"></div>
-            </div>
-            <div className="mt-4 flex flex-col">
-              {secondaryLinks.map((link, idx) => (
-                <SidebarLink
-                  key={idx}
-                  link={link}
-                  id={`secondary-link-${idx}`}
-                />
-              ))}
-            </div>
-          </div>
-          <div>
-            <SidebarLink
-              link={{
-                label: "User Profile",
-                href: "/profile",
-                icon: (
-                  <div className="h-7 w-7 flex-shrink-0 rounded-full bg-sidebar-accent dark:bg-sidebar-accent flex items-center justify-center">
-                    <IconUserBolt className="h-4 w-4 text-sidebar-accent-foreground" />
-                  </div>
-                ),
-              }}
-            />
-          </div>
-        </SidebarBodyWrapper>
+        <SidebarBody />
       </Sidebar>
 
       {children}

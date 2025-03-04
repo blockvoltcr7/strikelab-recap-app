@@ -4,9 +4,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { LogoIcon } from "./logo";
+import { SidebarBody } from "./sidebar-body";
 
 interface MobileSidebarProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
 }
 
@@ -57,7 +58,7 @@ export const MobileSidebar = ({
               >
                 <IconX size={18} />
               </div>
-              {children}
+              {children || <SidebarBody />}
             </motion.div>
           )}
         </AnimatePresence>
