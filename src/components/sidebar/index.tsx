@@ -61,7 +61,7 @@ export const SidebarLayout = ({
   return (
     <div
       className={cn(
-        "mx-auto flex w-full h-screen flex-1 flex-col overflow-hidden rounded-md border border-border bg-background dark:border-sidebar-border",
+        "mx-auto flex w-full h-screen flex-1 overflow-hidden bg-background",
         className,
       )}
     >
@@ -139,11 +139,13 @@ export const SidebarLayout = ({
 
       <div 
         className={cn(
-          "flex-1 transition-all duration-300 ease-in-out h-screen w-full overflow-auto",
+          "flex-1 transition-all duration-300 ease-in-out h-screen overflow-y-auto",
           isCollapsed ? "ml-16" : "ml-[220px]",
         )}
       >
-        {children}
+        <div className="w-full h-full">
+          {children}
+        </div>
       </div>
     </div>
   );

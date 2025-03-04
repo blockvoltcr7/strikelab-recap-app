@@ -7,9 +7,9 @@ const Index = () => {
   const isMobile = useIsMobile();
   
   return (
-    <>
+    <div className="h-screen flex">
       {isMobile ? (
-        <div className="flex h-screen flex-col">
+        <div className="flex h-screen flex-col w-full">
           <MobileSidebar>
             <SidebarBody />
           </MobileSidebar>
@@ -22,7 +22,7 @@ const Index = () => {
           <Outlet />
         </SidebarLayout>
       )}
-    </>
+    </div>
   );
 };
 
