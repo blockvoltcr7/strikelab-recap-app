@@ -26,28 +26,6 @@ export const getSidebarItems = (userRole?: string): SidebarItem[] => {
       title: "Video Library",
       href: "/videos",
       icon: <Library className="h-5 w-5" />,
-      submenu: [
-        {
-          title: "Boxing",
-          href: "/videos/boxing",
-          icon: <Video className="h-5 w-5" />,
-        },
-        {
-          title: "Muay Thai",
-          href: "/videos/muay-thai",
-          icon: <Video className="h-5 w-5" />,
-        },
-        {
-          title: "Sparring",
-          href: "/videos/sparring",
-          icon: <Video className="h-5 w-5" />,
-        },
-        {
-          title: "Junior Champs",
-          href: "/videos/junior-champs",
-          icon: <Video className="h-5 w-5" />,
-        },
-      ],
     }
   ];
 
