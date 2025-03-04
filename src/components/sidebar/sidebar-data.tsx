@@ -4,8 +4,6 @@ import {
   Lightbulb,
   ScrollText,
   Settings,
-  LifeBuoy,
-  Bell,
 } from "lucide-react";
 
 export interface SidebarLinkType {
@@ -53,20 +51,6 @@ export const secondaryLinks: SidebarLinkType[] = [
     href: "/settings",
     icon: (
       <Settings className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
-  {
-    label: "Support",
-    href: "/support",
-    icon: (
-      <LifeBuoy className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
-  {
-    label: "Updates",
-    href: "/updates",
-    icon: (
-      <Bell className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
     ),
   },
 ];
