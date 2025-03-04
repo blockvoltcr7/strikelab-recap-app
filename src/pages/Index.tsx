@@ -19,7 +19,7 @@ const Index = () => {
         </div>
       ) : (
         <SidebarLayout>
-          <div className="h-full overflow-y-auto">
+          <div className="h-full w-full overflow-y-auto">
             <Outlet />
           </div>
         </SidebarLayout>

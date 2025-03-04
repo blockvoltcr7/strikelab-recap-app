@@ -10,14 +10,14 @@ export default function Home() {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col gap-8 p-6 md:p-8"
+      className="flex flex-col gap-8 p-6 md:p-8 w-full"
     >
       <div className="space-y-4">
         <h1 className="text-3xl font-bold md:text-4xl">Home</h1>
         <p className="text-muted-foreground">Welcome to the Boxing Gym App</p>
       </div>
 
-      <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2">
+      <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-6 xl:max-h-[34rem] xl:grid-rows-2">
         <GridItem
           area="md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
           icon={<Box className="h-4 w-4 text-black dark:text-neutral-400" />}

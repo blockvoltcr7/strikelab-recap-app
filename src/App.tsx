@@ -42,6 +42,8 @@ const App = () => (
                 <Route index element={<Home />} />
                 <Route path="videos" element={<VideoLibrary />} />
                 <Route path="videos/:categoryId" element={<VideoCategory />} />
+                {/* Redirect /index to root path */}
+                <Route path="index" element={<Navigate to="/" replace />} />
               </Route>
               
               {/* 404 Route */}
