@@ -3,15 +3,16 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { AuthProvider } from "@/contexts/auth-context";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import Home from "./pages/home/Home";
 import Index from "./pages/Index";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import NotFound from "./pages/NotFound";
+import VideoLibrary from "./pages/videos/VideoLibrary";
+import VideoCategory from "./pages/videos/VideoCategory";
 
 const queryClient = new QueryClient();
 
@@ -37,7 +38,9 @@ const App = () => (
                   </ProtectedRoute>
                 } 
               >
-                <Route index element={<Home />} />
+                <Route index element={<Navigate to="/videos" replace />} />
+                <Route path="videos" element={<VideoLibrary />} />
+                <Route path="videos/:categoryId" element={<VideoCategory />} />
               </Route>
               
               {/* 404 Route */}
