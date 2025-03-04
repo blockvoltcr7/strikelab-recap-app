@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { SidebarBody } from "./sidebar-body";
 import { Logo, LogoIcon } from "./logo";
@@ -70,12 +69,7 @@ export const SidebarLayout = ({
           <SidebarBodyWrapper className="justify-between gap-10">
             <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
               <div className="flex items-center">
-                {isCollapsed ? <LogoIcon /> : (
-                  <div className="flex items-center">
-                    <Logo />
-                    <span className="ml-2 font-bold text-sidebar-foreground">Strike Lab</span>
-                  </div>
-                )}
+                {isCollapsed ? <LogoIcon /> : <Logo />}
               </div>
               <div className="mt-8 flex flex-col">
                 {primaryLinks.map((link, idx) => (
@@ -116,7 +110,6 @@ export const SidebarLayout = ({
                 isCollapsed={isCollapsed}
               />
               
-              {/* Logout button with matching styling */}
               <Button
                 variant="ghost"
                 size={isCollapsed ? "icon" : "default"}
@@ -128,8 +121,6 @@ export const SidebarLayout = ({
               </Button>
             </div>
           </SidebarBodyWrapper>
-          
-          {/* Collapse toggle button */}
           <Button
             variant="ghost"
             size="icon"

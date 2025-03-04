@@ -28,7 +28,6 @@ export const MobileSidebar = ({
       >
         <div className="flex items-center">
           <LogoIcon />
-          <span className="ml-2 font-bold text-sidebar-foreground">Strike Lab</span>
         </div>
         <div className="z-20 flex justify-end">
           <Menu
