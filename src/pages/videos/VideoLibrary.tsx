@@ -20,6 +20,11 @@ const VideoLibrary = () => {
       description: "Learn the art of eight limbs with techniques from professional Muay Thai instructors."
     },
     {
+      id: "sparring",
+      title: "Sparring",
+      description: "Enhance your combat skills with guided sparring sessions and techniques."
+    },
+    {
       id: "junior-champs",
       title: "Junior Champs",
       description: "Youth-focused training videos designed specifically for our junior fighters."
