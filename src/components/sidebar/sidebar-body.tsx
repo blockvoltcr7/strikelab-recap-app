@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -7,7 +6,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, LogOut, User } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { getSidebarItems } from "./sidebar-data";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,14 +15,16 @@ import { ThemeToggle } from "../theme-toggle";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useMobileSidebar } from "./mobile-sidebar";
 import { useSidebar } from "./use-sidebar";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SidebarBody() {
   const [open, setOpen] = useState<Record<string, boolean>>({});
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const [userRole, setUserRole] = useState<string | undefined>(undefined);
   const location = useLocation();
   const isMobile = useIsMobile();
   const { isCollapsed } = useSidebar();
+  const { toast } = useToast();
   
   // Get the setOpen function from the mobile sidebar context if in mobile view
   let mobileSidebarControl;
@@ -69,15 +70,31 @@ export default function SidebarBody() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Logged out",
+        description: "You have been successfully logged out",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Logout failed",
+        description: "There was an error logging you out. Please try again.",
+      });
+      console.error("Logout error:", error);
+    }
+  };
+
   const items = getSidebarItems(userRole);
 
   return (
     <div className="flex h-full w-full flex-col justify-between overflow-auto">
-      <div className="flex-1 py-8">
-        <div className="px-3 py-2">
-          <div className="mt-3 space-y-1">
+      <div className="flex-1 py-4">
+        <div className="px-2 py-1">
+          <div className="mt-2 space-y-1">
             {items.map((item) => {
-              // Skip items that require specific roles if user doesn't have it
               if (
                 item.requiredRole && 
                 userRole && 
@@ -115,7 +132,7 @@ export default function SidebarBody() {
                         )}
                       </Button>
                     </CollapsibleTrigger>
-                    <CollapsibleContent className="ml-4 mt-1 space-y-1">
+                    <CollapsibleContent className="ml-3 mt-1 space-y-1">
                       {item.submenu.map((subItem) => (
                         <div key={subItem.href} onClick={closeMobileSidebar}>
                           <SidebarLink
@@ -145,24 +162,50 @@ export default function SidebarBody() {
           </div>
         </div>
       </div>
+      
       {!isCollapsed ? (
-        <div className="sticky bottom-0 flex items-center justify-between border-t bg-card p-4">
-          <div className="flex items-center space-x-2">
-            <div className="bg-primary h-8 w-8 rounded-full" />
-            <div>
-              <p className="text-sm font-medium">
-                {user?.email ?? "User"}
-              </p>
-              <p className="text-xs text-muted-foreground capitalize">
-                {userRole ?? "loading..."}
-              </p>
+        <div className="sticky bottom-0 flex flex-col border-t bg-card p-3">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center space-x-2">
+              <div className="bg-primary h-7 w-7 rounded-full flex items-center justify-center">
+                <User className="h-4 w-4 text-primary-foreground" />
+              </div>
+              <div>
+                <p className="text-xs font-medium">
+                  {user?.email ? user.email.split('@')[0] : "User"}
+                </p>
+                <p className="text-xs text-muted-foreground capitalize">
+                  {userRole ?? "loading..."}
+                </p>
+              </div>
             </div>
+            <ThemeToggle />
           </div>
-          <ThemeToggle />
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="w-full flex items-center justify-start gap-2 text-xs"
+            onClick={handleLogout}
+          >
+            <LogOut className="h-3.5 w-3.5" />
+            Logout
+          </Button>
         </div>
       ) : (
-        <div className="sticky bottom-0 flex justify-center border-t bg-card p-4">
+        <div className="sticky bottom-0 flex flex-col items-center border-t bg-card pt-3 pb-2 gap-3">
+          <div className="bg-primary h-7 w-7 rounded-full flex items-center justify-center" title={user?.email || "User"}>
+            <User className="h-4 w-4 text-primary-foreground" />
+          </div>
           <ThemeToggle />
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-7 w-7 rounded-full"
+            onClick={handleLogout}
+            title="Logout"
+          >
+            <LogOut className="h-3.5 w-3.5" />
+          </Button>
         </div>
       )}
     </div>

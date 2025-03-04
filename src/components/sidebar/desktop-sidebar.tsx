@@ -18,14 +18,14 @@ export const DesktopSidebar = ({
     <>
       <motion.div
         className={cn(
-          "hidden h-full flex-shrink-0 bg-sidebar px-3 py-4 dark:bg-sidebar",
+          "hidden h-full flex-shrink-0 bg-sidebar px-2 py-3 dark:bg-sidebar",
           "border-r border-sidebar-border relative",
-          isCollapsed ? "w-16" : "w-[220px]", 
+          isCollapsed ? "w-14" : "w-[200px]", 
           "md:flex md:flex-col",
           className,
         )}
         animate={{
-          width: isCollapsed ? "64px" : "220px",
+          width: isCollapsed ? "56px" : "200px",
           transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] }
         }}
         {...props}

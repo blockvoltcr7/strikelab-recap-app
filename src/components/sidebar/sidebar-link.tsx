@@ -27,7 +27,7 @@ const SidebarLink = ({ href, icon, label, className, id, isCollapsed = false }: 
   return (
     <Link
       to={href}
-      className={cn("group relative px-2 py-1", className)}
+      className={cn("group relative px-1.5 py-0.5", className)}
       onClick={handleClick}
       onMouseEnter={() => {
         setHovered(id ?? null);
@@ -47,8 +47,8 @@ const SidebarLink = ({ href, icon, label, className, id, isCollapsed = false }: 
         />
       )}
       <div className={cn(
-        "relative z-20 flex items-center py-2 px-2",
-        isCollapsed ? "justify-center" : "justify-start gap-3"
+        "relative z-20 flex items-center py-1.5 px-1.5",
+        isCollapsed ? "justify-center" : "justify-start gap-2.5"
       )}>
         {/* Always show the icon, regardless of collapsed state */}
         <div className={cn(isCollapsed ? "mx-auto" : "")}>
@@ -62,7 +62,7 @@ const SidebarLink = ({ href, icon, label, className, id, isCollapsed = false }: 
               opacity: 1,
               transition: { delay: 0.1 }
             }}
-            className="inline-block whitespace-pre text-sm font-medium text-sidebar-foreground transition duration-150 group-hover:translate-x-1"
+            className="inline-block whitespace-pre text-xs font-medium text-sidebar-foreground transition duration-150 group-hover:translate-x-1"
           >
             {label}
           </motion.span>
