@@ -12,7 +12,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { getSidebarItems } from "./sidebar-data";
 import { supabase } from "@/integrations/supabase/client";
 import SidebarLink from "./sidebar-link";
-import ThemeToggle from "../theme-toggle";
+import { ThemeToggle } from "../theme-toggle";
 
 export default function SidebarBody() {
   const [open, setOpen] = useState<Record<string, boolean>>({});

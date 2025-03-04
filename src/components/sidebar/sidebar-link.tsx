@@ -4,25 +4,22 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
-interface LinkProps {
-  label: string;
+interface SidebarLinkProps {
+  key?: string;
   href: string;
   icon: React.ReactNode;
-}
-
-interface SidebarLinkProps {
-  link: LinkProps;
+  label: string;
   className?: string;
   id?: string;
   isCollapsed?: boolean;
 }
 
-const SidebarLink = ({ link, className, id, isCollapsed = false }: SidebarLinkProps) => {
+const SidebarLink = ({ href, icon, label, className, id, isCollapsed = false }: SidebarLinkProps) => {
   const [hovered, setHovered] = useState<string | null>(null);
   
   return (
     <Link
-      to={link.href}
+      to={href}
       className={cn("group relative px-2 py-1", className)}
       onMouseEnter={() => {
         setHovered(id ?? null);
@@ -45,7 +42,7 @@ const SidebarLink = ({ link, className, id, isCollapsed = false }: SidebarLinkPr
         "relative z-20 flex items-center py-2 px-2",
         isCollapsed ? "justify-center" : "justify-start gap-3"
       )}>
-        {link.icon}
+        {icon}
 
         {!isCollapsed && (
           <motion.span
@@ -56,7 +53,7 @@ const SidebarLink = ({ link, className, id, isCollapsed = false }: SidebarLinkPr
             }}
             className="inline-block whitespace-pre text-sm font-medium text-sidebar-foreground transition duration-150 group-hover:translate-x-1"
           >
-            {link.label}
+            {label}
           </motion.span>
         )}
       </div>

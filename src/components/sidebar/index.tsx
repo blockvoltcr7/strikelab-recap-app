@@ -1,9 +1,8 @@
 
 import { cn } from "@/lib/utils";
-import { SidebarBody } from "./sidebar-body";
+import SidebarBody from "./sidebar-body";
 import { Logo, LogoIcon } from "./logo";
 import SidebarLink from "./sidebar-link";
-import { primaryLinks, secondaryLinks } from "./sidebar-data";
 import { User } from "lucide-react";
 import { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
@@ -72,54 +71,7 @@ export const SidebarLayout = ({
               <div className="flex items-center">
                 {isCollapsed ? <LogoIcon /> : <Logo />}
               </div>
-              <div className="mt-8 flex flex-col">
-                {primaryLinks.map((link, idx) => (
-                  <SidebarLink 
-                    key={idx} 
-                    link={link} 
-                    id={`primary-link-${idx}`} 
-                    isCollapsed={isCollapsed}
-                  />
-                ))}
-              </div>
-              <div className="mt-4">
-                <div className="h-px w-full bg-sidebar-border"></div>
-                <div className="h-px w-full bg-sidebar"></div>
-              </div>
-              <div className="mt-4 flex flex-col">
-                {secondaryLinks.map((link, idx) => (
-                  <SidebarLink
-                    key={idx}
-                    link={link}
-                    id={`secondary-link-${idx}`}
-                    isCollapsed={isCollapsed}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col gap-2 px-2">
-              <SidebarLink
-                link={{
-                  label: "User Profile",
-                  href: "/profile",
-                  icon: (
-                    <div className="h-7 w-7 flex-shrink-0 rounded-full bg-sidebar-accent dark:bg-sidebar-accent flex items-center justify-center">
-                      <User className="h-4 w-4 text-sidebar-accent-foreground" />
-                    </div>
-                  ),
-                }}
-                isCollapsed={isCollapsed}
-              />
-              
-              <Button
-                variant="ghost"
-                size={isCollapsed ? "icon" : "default"}
-                onClick={handleLogout}
-                className="w-full justify-start px-2 py-2 text-sidebar-foreground hover:bg-sidebar-accent"
-              >
-                <LogOut className="h-5 w-5 mr-3 text-neutral-700 dark:text-neutral-200" />
-                {!isCollapsed && <span className="text-sm font-medium">Logout</span>}
-              </Button>
+              <SidebarBody />
             </div>
           </SidebarBodyWrapper>
           <Button
@@ -160,6 +112,6 @@ const SidebarBodyWrapper = ({ children, className }: SidebarBodyWrapperProps) =>
 };
 
 export { Logo, LogoIcon } from "./logo";
-export { SidebarBody } from "./sidebar-body";
+export { default as SidebarBody } from "./sidebar-body";
 export { DesktopSidebar } from "./desktop-sidebar";
 export { MobileSidebar } from "./mobile-sidebar";
