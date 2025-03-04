@@ -139,9 +139,8 @@ export const SidebarLayout = ({
 
       <div 
         className={cn(
-          "flex-1 transition-all duration-300 ease-in-out h-screen",
+          "flex-1 transition-all duration-300 ease-in-out h-screen w-full overflow-auto",
           isCollapsed ? "ml-16" : "ml-[220px]",
-          "overflow-auto" // Change to auto to allow scrolling
         )}
       >
         {children}
