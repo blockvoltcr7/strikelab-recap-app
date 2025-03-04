@@ -45,7 +45,7 @@ export const MobileSidebar = ({
                 ease: [0.23, 1, 0.32, 1],
               }}
               className={cn(
-                "fixed inset-0 z-[100] flex h-full w-full flex-col justify-between bg-sidebar p-4 sm:p-10",
+                "fixed inset-0 z-[100] flex h-full w-full flex-col justify-between bg-sidebar p-4 sm:p-10 overflow-hidden",
                 "glass-morphism",
                 className,
               )}

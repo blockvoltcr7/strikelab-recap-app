@@ -18,7 +18,7 @@ export const DesktopSidebar = ({
       <motion.div
         className={cn(
           "hidden h-full w-[280px] max-w-[280px] flex-shrink-0 bg-sidebar px-4 py-4 dark:bg-sidebar md:flex md:flex-col",
-          "border-r border-sidebar-border",
+          "border-r border-sidebar-border overflow-hidden",
           className,
         )}
         initial={{ width: 0 }}

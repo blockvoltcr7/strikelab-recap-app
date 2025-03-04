@@ -78,16 +78,16 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
         </nav>
       </div>
       
-      {/* Sign out button - updated styling */}
-      <div className="px-3 pb-3">
+      {/* Sign out button - fixed width to prevent sidebar expansion */}
+      <div className="px-3 pb-3 max-w-full">
         <Button
           variant="outline"
           size={isCollapsed ? "icon" : "default"}
           onClick={handleLogout}
-          className="w-full justify-start bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:hover:bg-red-900/30 border-red-200 dark:border-red-800 text-red-600 dark:text-red-400"
+          className="w-full justify-start bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:hover:bg-red-900/30 border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 overflow-hidden"
         >
-          <LogOut className={`h-4 w-4 ${isCollapsed ? "" : "mr-2"}`} />
-          {!isCollapsed && <span>Logout</span>}
+          <LogOut className={`h-4 w-4 flex-shrink-0 ${isCollapsed ? "" : "mr-2"}`} />
+          {!isCollapsed && <span className="truncate">Logout</span>}
         </Button>
       </div>
     </div>
