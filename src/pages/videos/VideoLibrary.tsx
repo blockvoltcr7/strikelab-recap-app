@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Boxing, Dumbbell, Users } from "lucide-react";
+import { Dumbbell, Target, Users } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -11,7 +11,7 @@ const VideoLibrary = () => {
     {
       id: "boxing",
       title: "Boxing",
-      icon: <Boxing className="h-12 w-12" />,
+      icon: <Target className="h-12 w-12" />,
       description: "Master the fundamentals of boxing with our comprehensive video collection.",
       color: "from-blue-500/20 to-blue-700/20",
       buttonColor: "bg-blue-600 hover:bg-blue-700"
