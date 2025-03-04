@@ -42,7 +42,7 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
         {/* App title for mobile */}
         {isMobile && (
           <div className="mb-6 mt-2 text-xl font-bold text-sidebar-foreground">
-            Strike Lab
+            STRIKE LAB
           </div>
         )}
         

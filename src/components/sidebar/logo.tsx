@@ -13,7 +13,7 @@ export const Logo = () => {
         animate={{ opacity: 1 }}
         className="whitespace-pre font-medium text-black dark:text-white"
       >
-        Strike Lab
+        STRIKE LAB
       </motion.span>
     </Link>
   );
@@ -25,7 +25,7 @@ export const LogoIcon = () => {
       to="/"
       className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black"
     >
-      <span className="whitespace-pre font-medium text-black dark:text-white">Strike Lab</span>
+      <span className="whitespace-pre font-medium text-black dark:text-white">STRIKE LAB</span>
     </Link>
   );
 };

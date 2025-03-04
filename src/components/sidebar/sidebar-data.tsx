@@ -3,7 +3,6 @@ import {
   Video,
   Lightbulb,
   ScrollText,
-  User,
   Settings,
   LifeBuoy,
   Bell,
@@ -43,13 +42,6 @@ export const primaryLinks: SidebarLinkType[] = [
     href: "/history",
     icon: (
       <ScrollText className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
-  {
-    label: "Profile",
-    href: "/profile",
-    icon: (
-      <User className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
     ),
   },
 ];
