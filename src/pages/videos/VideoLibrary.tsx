@@ -35,7 +35,7 @@ const VideoLibrary = () => {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col gap-8 p-6 md:p-8 w-full min-h-screen"
+      className="flex flex-col gap-8 p-3 md:p-5 w-full min-h-screen"
     >
       <div className="space-y-4">
         <h1 className="text-3xl font-bold md:text-4xl">Video Library</h1>
