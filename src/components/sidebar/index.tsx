@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "../../lib/cn";
@@ -181,7 +180,9 @@ export const SidebarBody = (props: React.ComponentProps<typeof motion.div>) => {
   return (
     <>
       <DesktopSidebar {...props} />
-      <MobileSidebar {...(props as React.ComponentProps<"div">)} />
+      <MobileSidebar className={props.className}>
+        {props.children}
+      </MobileSidebar>
     </>
   );
 };
@@ -215,8 +216,10 @@ export const DesktopSidebar = ({
 export const MobileSidebar = ({
   className,
   children,
-  ...props
-}: React.ComponentProps<"div">) => {
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) => {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -225,7 +228,6 @@ export const MobileSidebar = ({
           "flex h-14 w-full flex-row items-center justify-between bg-white px-4 py-4 dark:bg-neutral-900 md:hidden",
           "border-b border-neutral-200 dark:border-neutral-800",
         )}
-        {...props}
       >
         <LogoIcon />
         <div className="z-20 flex w-full justify-end">
