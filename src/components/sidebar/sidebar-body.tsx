@@ -1,6 +1,6 @@
 
 import { useSidebar } from "./use-sidebar";
-import { SIDEBAR_ITEMS } from "./sidebar-data";
+import { primaryLinks, secondaryLinks } from "./sidebar-data";
 import SidebarLink from "./sidebar-link";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
@@ -33,9 +33,23 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
           </div>
         )}
         
-        {/* Navigation items */}
+        {/* Primary navigation items */}
         <nav className="flex flex-col gap-1">
-          {SIDEBAR_ITEMS.map((item) => (
+          {primaryLinks.map((item) => (
+            <SidebarLink 
+              key={item.href} 
+              link={item} 
+              id={`sidebar-link-${item.href}`} 
+            />
+          ))}
+          
+          {/* Divider */}
+          <div className="my-2">
+            <div className="h-px w-full bg-sidebar-border"></div>
+          </div>
+          
+          {/* Secondary navigation items */}
+          {secondaryLinks.map((item) => (
             <SidebarLink 
               key={item.href} 
               link={item} 
