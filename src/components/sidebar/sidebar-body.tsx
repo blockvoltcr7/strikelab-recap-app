@@ -78,8 +78,8 @@ export const SidebarBody = ({ className }: SidebarBodyProps) => {
         </nav>
       </div>
       
-      {/* Sign out button */}
-      <div className="p-3">
+      {/* Sign out button - updated styling */}
+      <div className="px-3 pb-3">
         <Button
           variant="outline"
           size={isCollapsed ? "icon" : "default"}
