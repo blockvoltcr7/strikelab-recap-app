@@ -1,5 +1,5 @@
 
-import { cn } from "../../lib/cn";
+import { cn } from "@/lib/utils";
 import { SidebarBody } from "./sidebar-body";
 import { Logo } from "./logo";
 import SidebarLink from "./sidebar-link";
@@ -16,7 +16,7 @@ export const SidebarLayout = ({
   return (
     <div
       className={cn(
-        "mx-auto flex w-full h-screen flex-1 flex-col overflow-hidden rounded-md border border-neutral-200 bg-gray-50 dark:border-neutral-700 dark:bg-neutral-900 md:flex-row",
+        "mx-auto flex w-full h-screen flex-1 flex-col overflow-hidden rounded-md border border-border bg-background dark:border-sidebar-border md:flex-row",
         className,
       )}
     >
@@ -30,8 +30,8 @@ export const SidebarLayout = ({
               ))}
             </div>
             <div className="mt-4">
-              <div className="h-px w-full bg-neutral-200 dark:bg-neutral-700"></div>
-              <div className="h-px w-full bg-white dark:bg-neutral-900"></div>
+              <div className="h-px w-full bg-sidebar-border"></div>
+              <div className="h-px w-full bg-sidebar"></div>
             </div>
             <div className="mt-4 flex flex-col">
               {secondaryLinks.map((link, idx) => (
@@ -49,8 +49,8 @@ export const SidebarLayout = ({
                 label: "User Profile",
                 href: "/profile",
                 icon: (
-                  <div className="h-7 w-7 flex-shrink-0 rounded-full bg-neutral-300 dark:bg-neutral-700 flex items-center justify-center">
-                    <IconUserBolt className="h-4 w-4 text-neutral-700 dark:text-neutral-200" />
+                  <div className="h-7 w-7 flex-shrink-0 rounded-full bg-sidebar-accent dark:bg-sidebar-accent flex items-center justify-center">
+                    <IconUserBolt className="h-4 w-4 text-sidebar-accent-foreground" />
                   </div>
                 ),
               }}

@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { cn } from "../../lib/cn";
+import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
 interface LinkProps {
@@ -33,7 +33,7 @@ const SidebarLink = ({ link, className, id }: SidebarLinkProps) => {
       {hovered === id && (
         <motion.div
           layoutId="hovered-sidebar-link"
-          className="absolute inset-0 z-10 rounded-lg bg-neutral-100 dark:bg-neutral-800"
+          className="absolute inset-0 z-10 rounded-lg bg-sidebar-accent"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -49,7 +49,7 @@ const SidebarLink = ({ link, className, id }: SidebarLinkProps) => {
             opacity: 1,
             transition: { delay: 0.1 }
           }}
-          className="inline-block whitespace-pre text-sm font-medium text-neutral-700 transition duration-150 group-hover:translate-x-1 dark:text-neutral-200"
+          className="inline-block whitespace-pre text-sm font-medium text-sidebar-foreground transition duration-150 group-hover:translate-x-1"
         >
           {link.label}
         </motion.span>
