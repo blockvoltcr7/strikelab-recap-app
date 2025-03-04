@@ -1,9 +1,6 @@
 import {
   Home,
   Video,
-  Lightbulb,
-  ScrollText,
-  Settings,
 } from "lucide-react";
 
 export interface SidebarLinkType {
@@ -28,32 +25,10 @@ export const primaryLinks: SidebarLinkType[] = [
       <Video className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
     ),
   },
-  {
-    label: "Wisdom & Quotes",
-    href: "/wisdom",
-    icon: (
-      <Lightbulb className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
-  {
-    label: "History Lessons",
-    href: "/history",
-    icon: (
-      <ScrollText className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
 ];
 
 // Secondary navigation links shown below the divider
-export const secondaryLinks: SidebarLinkType[] = [
-  {
-    label: "Settings",
-    href: "/settings",
-    icon: (
-      <Settings className="h-5 w-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-    ),
-  },
-];
+export const secondaryLinks: SidebarLinkType[] = [];
 
 // For backward compatibility, keep SIDEBAR_ITEMS export
 export const SIDEBAR_ITEMS: SidebarLinkType[] = [...primaryLinks, ...secondaryLinks];
