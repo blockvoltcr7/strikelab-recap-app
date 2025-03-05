@@ -55,6 +55,7 @@ const SidebarLink = ({ href, icon, label, className, id, isCollapsed = false }: 
           {icon}
         </div>
 
+        {/* Only render the label if not collapsed */}
         {!isCollapsed && (
           <motion.span
             initial={{ opacity: 0 }}
