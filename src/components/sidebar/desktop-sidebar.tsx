@@ -24,6 +24,7 @@ export const DesktopSidebar = ({
           "md:flex md:flex-col",
           className,
         )}
+        initial={false}
         animate={{
           width: isCollapsed ? "48px" : "180px",
           transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] }

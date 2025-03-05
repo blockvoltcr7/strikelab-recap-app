@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 export function useSidebar() {
   const [hovered, setHovered] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(true); // Changed default state to true
+  const [isCollapsed, setIsCollapsed] = useState(true); // Default to collapsed
   
   // Load collapsed state from localStorage on initial render
   useEffect(() => {
