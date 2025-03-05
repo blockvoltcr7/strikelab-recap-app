@@ -1,63 +1,57 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Link } from "react-router-dom";
-import { useSidebar } from "./use-sidebar";
+import { Link, useLocation } from "react-router-dom";
 
 interface SidebarLinkProps {
-  key?: string;
   href: string;
   icon: React.ReactNode;
   label: string;
   className?: string;
   id?: string;
   isCollapsed?: boolean;
+  onClick?: () => void;
 }
 
-const SidebarLink = ({ href, icon, label, className, id, isCollapsed = false }: SidebarLinkProps) => {
-  const [hovered, setHovered] = useState<string | null>(null);
-  const { setIsCollapsed } = useSidebar();
-  
-  const handleClick = () => {
-    // Collapse the sidebar when a link is clicked
-    setIsCollapsed(true);
-  };
+const SidebarLink = ({ 
+  href, 
+  icon, 
+  label, 
+  className, 
+  id, 
+  isCollapsed = false,
+  onClick
+}: SidebarLinkProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const location = useLocation();
+  const isActive = location.pathname === href || location.pathname.startsWith(`${href}/`);
   
   return (
     <Link
       to={href}
-      className={cn("group relative px-1 py-0.5", className)}
-      onClick={handleClick}
-      onMouseEnter={() => {
-        setHovered(id ?? null);
-      }}
-      onMouseLeave={() => {
-        setHovered(null);
-      }}
-    >
-      {hovered === id && (
-        <motion.div
-          layoutId="hovered-sidebar-link"
-          className="absolute inset-0 z-10 rounded-lg bg-sidebar-accent"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.15 }}
-        />
+      className={cn(
+        "group relative flex items-center px-3 py-2 my-1 rounded-lg transition-colors",
+        isActive ? "bg-sidebar-accent" : "hover:bg-sidebar-accent/50",
+        className
       )}
+      onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className={cn(
-        "relative z-20 flex items-center py-1 px-1",
-        isCollapsed ? "justify-center" : "justify-start gap-2"
+        "relative z-20 flex items-center", 
+        isCollapsed ? "justify-center w-full" : "gap-3"
       )}>
-        {/* Always show the icon, regardless of collapsed state */}
-        <div className={cn(isCollapsed ? "mx-auto" : "")}>
+        <span className={cn(
+          "flex items-center justify-center",
+          isCollapsed ? "mx-auto" : ""
+        )}>
           {icon}
-        </div>
+        </span>
 
-        {/* Only render the label if not collapsed */}
         {!isCollapsed && (
-          <span className="inline-block whitespace-pre text-xs font-medium text-sidebar-foreground transition duration-150 group-hover:translate-x-1">
+          <span className="text-sm font-medium text-white whitespace-nowrap">
             {label}
           </span>
         )}

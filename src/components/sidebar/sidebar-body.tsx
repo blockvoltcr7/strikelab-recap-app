@@ -34,11 +34,9 @@ export default function SidebarBody() {
   }, [user]);
 
   return (
-    <div className="flex h-full w-full flex-col justify-between overflow-auto">
-      <div className="flex-1 py-2">
-        <div className="px-1">
-          <SidebarMenuItems userRole={userRole} isCollapsed={isCollapsed} />
-        </div>
+    <div className="flex h-full w-full flex-col justify-between overflow-hidden">
+      <div className="flex-1">
+        <SidebarMenuItems userRole={userRole} isCollapsed={isCollapsed} />
       </div>
       
       <SidebarUserProfile userRole={userRole} isCollapsed={isCollapsed} />

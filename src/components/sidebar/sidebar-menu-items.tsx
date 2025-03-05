@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 import {
   Collapsible,
@@ -19,7 +19,7 @@ interface SidebarMenuItemsProps {
 }
 
 export const SidebarMenuItems = ({ userRole, isCollapsed }: SidebarMenuItemsProps) => {
-  const [open, setOpen] = useState<Record<string, boolean>>({});
+  const [openSubmenus, setOpenSubmenus] = React.useState<Record<string, boolean>>({});
   const location = useLocation();
   const isMobile = useIsMobile();
   
@@ -32,7 +32,7 @@ export const SidebarMenuItems = ({ userRole, isCollapsed }: SidebarMenuItemsProp
   }
 
   const toggleSubmenu = (title: string) => {
-    setOpen((prev) => ({
+    setOpenSubmenus((prev) => ({
       ...prev,
       [title]: !prev[title],
     }));
@@ -48,7 +48,7 @@ export const SidebarMenuItems = ({ userRole, isCollapsed }: SidebarMenuItemsProp
   const items = getSidebarItems(userRole);
 
   return (
-    <div className="mt-1 space-y-0.5">
+    <div className="space-y-1 py-2">
       {items.map((item) => {
         if (
           item.requiredRole && 
@@ -62,42 +62,42 @@ export const SidebarMenuItems = ({ userRole, isCollapsed }: SidebarMenuItemsProp
           return (
             <Collapsible
               key={item.title}
-              open={open[item.title]}
+              open={openSubmenus[item.title]}
               onOpenChange={() => toggleSubmenu(item.title)}
             >
               <CollapsibleTrigger asChild>
                 <Button
                   variant="ghost"
-                  className={`w-full justify-between px-2 hover:bg-accent ${
-                    location.pathname.startsWith(item.href)
-                      ? "bg-accent"
-                      : ""
-                  }`}
+                  className={cn(
+                    "w-full justify-between px-3 py-2",
+                    "hover:bg-sidebar-accent/50 text-white",
+                    location.pathname.startsWith(item.href) ? "bg-sidebar-accent" : ""
+                  )}
                 >
-                  <span className="flex items-center gap-2">
+                  <span className="flex items-center gap-3">
                     {item.icon}
                     {!isCollapsed && item.title}
                   </span>
                   {!isCollapsed && (
                     <ChevronDown
                       className={`h-4 w-4 transition-transform ${
-                        open[item.title] ? "rotate-180" : ""
+                        openSubmenus[item.title] ? "rotate-180" : ""
                       }`}
                     />
                   )}
                 </Button>
               </CollapsibleTrigger>
-              <CollapsibleContent className="ml-2 mt-0.5 space-y-0.5">
+              <CollapsibleContent className="ml-2 mt-1 space-y-1">
                 {item.submenu.map((subItem) => (
-                  <div key={subItem.href} onClick={closeMobileSidebar}>
-                    <SidebarLink
-                      href={subItem.href}
-                      icon={subItem.icon}
-                      label={subItem.title}
-                      isCollapsed={isCollapsed}
-                      id={subItem.href}
-                    />
-                  </div>
+                  <SidebarLink
+                    key={subItem.href}
+                    href={subItem.href}
+                    icon={subItem.icon}
+                    label={subItem.title}
+                    isCollapsed={isCollapsed}
+                    id={subItem.href}
+                    onClick={closeMobileSidebar}
+                  />
                 ))}
               </CollapsibleContent>
             </Collapsible>
@@ -105,17 +105,22 @@ export const SidebarMenuItems = ({ userRole, isCollapsed }: SidebarMenuItemsProp
         }
 
         return (
-          <div key={item.href} onClick={closeMobileSidebar}>
-            <SidebarLink
-              href={item.href}
-              icon={item.icon}
-              label={item.title}
-              isCollapsed={isCollapsed}
-              id={item.href}
-            />
-          </div>
+          <SidebarLink
+            key={item.href}
+            href={item.href}
+            icon={item.icon}
+            label={item.title}
+            isCollapsed={isCollapsed}
+            id={item.href}
+            onClick={closeMobileSidebar}
+          />
         );
       })}
     </div>
   );
+};
+
+// Helper function to conditionally join class names
+const cn = (...classes: (string | boolean | undefined)[]) => {
+  return classes.filter(Boolean).join(' ');
 };

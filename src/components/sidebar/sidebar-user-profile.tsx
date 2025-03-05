@@ -34,8 +34,11 @@ export const SidebarUserProfile = ({ userRole, isCollapsed }: SidebarUserProfile
 
   if (isCollapsed) {
     return (
-      <div className="sticky bottom-0 flex flex-col items-center border-t bg-card pt-3 pb-2 gap-3">
-        <div className="bg-primary h-7 w-7 rounded-full flex items-center justify-center" title={user?.email || "User"}>
+      <div className="sticky bottom-0 flex flex-col items-center border-t border-sidebar-border bg-sidebar pt-3 pb-2 gap-3">
+        <div 
+          className="bg-primary h-7 w-7 rounded-full flex items-center justify-center" 
+          title={user?.email || "User"}
+        >
           <User className="h-4 w-4 text-primary-foreground" />
         </div>
         <ThemeToggle />
@@ -53,17 +56,17 @@ export const SidebarUserProfile = ({ userRole, isCollapsed }: SidebarUserProfile
   }
 
   return (
-    <div className="sticky bottom-0 flex flex-col border-t bg-card p-3">
+    <div className="sticky bottom-0 flex flex-col border-t border-sidebar-border bg-sidebar p-3">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center space-x-2">
           <div className="bg-primary h-7 w-7 rounded-full flex items-center justify-center">
             <User className="h-4 w-4 text-primary-foreground" />
           </div>
           <div>
-            <p className="text-xs font-medium">
+            <p className="text-xs font-medium text-white">
               {user?.email ? user.email.split('@')[0] : "User"}
             </p>
-            <p className="text-xs text-muted-foreground capitalize">
+            <p className="text-xs text-gray-400 capitalize">
               {userRole ?? "loading..."}
             </p>
           </div>
@@ -73,7 +76,7 @@ export const SidebarUserProfile = ({ userRole, isCollapsed }: SidebarUserProfile
       <Button 
         variant="ghost" 
         size="sm" 
-        className="w-full flex items-center justify-start gap-2 text-xs"
+        className="w-full flex items-center justify-start gap-2 text-xs text-white hover:bg-sidebar-accent/50"
         onClick={handleLogout}
       >
         <LogOut className="h-3.5 w-3.5" />

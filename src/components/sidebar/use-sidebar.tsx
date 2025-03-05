@@ -2,9 +2,7 @@
 import { useState, useEffect } from "react";
 
 export function useSidebar() {
-  const [hovered, setHovered] = useState<string | null>(null);
-  const [open, setOpen] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(true); // Default to collapsed
+  const [isCollapsed, setIsCollapsed] = useState(true);
   
   // Load collapsed state from localStorage on initial render
   useEffect(() => {
@@ -20,11 +18,8 @@ export function useSidebar() {
   }, [isCollapsed]);
   
   return {
-    hovered,
-    setHovered,
-    open,
-    setOpen,
     isCollapsed,
-    setIsCollapsed
+    setIsCollapsed,
+    toggleSidebar: () => setIsCollapsed(prev => !prev)
   };
 }

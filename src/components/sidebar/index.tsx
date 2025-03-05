@@ -27,12 +27,7 @@ export const SidebarLayout = ({
   className,
   children,
 }: SidebarLayoutProps) => {
-  const { isCollapsed, setIsCollapsed } = useSidebar();
-  const isMobile = useIsMobile();
-
-  const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
-  };
+  const { isCollapsed, toggleSidebar } = useSidebar();
 
   return (
     <div
@@ -44,8 +39,8 @@ export const SidebarLayout = ({
       <Sidebar>
         <DesktopSidebar isCollapsed={isCollapsed}>
           <SidebarBodyWrapper className="justify-between gap-10">
-            <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-              <div className="flex items-center justify-center py-1">
+            <div className="flex flex-1 flex-col overflow-hidden">
+              <div className="flex items-center justify-center py-2 mb-2">
                 {isCollapsed ? <LogoIcon /> : <Logo />}
               </div>
               <SidebarBody />
@@ -56,6 +51,7 @@ export const SidebarLayout = ({
             size="icon"
             onClick={toggleSidebar}
             className="absolute -right-2.5 top-4 z-30 h-5 w-5 rounded-full border border-sidebar-border bg-sidebar shadow-md"
+            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {isCollapsed ? (
               <ChevronRight className="h-2.5 w-2.5" />
@@ -68,13 +64,11 @@ export const SidebarLayout = ({
 
       <div 
         className={cn(
-          "flex-1 transition-all duration-300 ease-in-out h-screen overflow-y-auto",
-          isCollapsed ? "ml-14" : "ml-[200px]",
+          "flex-1 transition-all duration-300 ease-in-out h-screen overflow-auto",
+          isCollapsed ? "ml-12" : "ml-[180px]",
         )}
       >
-        <div className="w-full h-full">
-          {children}
-        </div>
+        {children}
       </div>
     </div>
   );

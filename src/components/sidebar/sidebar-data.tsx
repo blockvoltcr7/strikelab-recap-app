@@ -1,13 +1,12 @@
 
 import {
-  LayoutDashboard,
+  LayoutGrid,
   Library,
   Upload,
   Settings,
-  Video,
 } from "lucide-react";
 
-interface SidebarItem {
+export interface SidebarItem {
   title: string;
   href: string;
   icon: JSX.Element;
@@ -20,7 +19,7 @@ export const getSidebarItems = (userRole?: string): SidebarItem[] => {
     {
       title: "Dashboard",
       href: "/",
-      icon: <LayoutDashboard className="h-5 w-5" />,
+      icon: <LayoutGrid className="h-5 w-5" />,
     },
     {
       title: "Video Library",
