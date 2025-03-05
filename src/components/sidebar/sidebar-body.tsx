@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -91,9 +92,9 @@ export default function SidebarBody() {
 
   return (
     <div className="flex h-full w-full flex-col justify-between overflow-auto">
-      <div className="flex-1 py-4">
-        <div className="px-2 py-1">
-          <div className="mt-2 space-y-1">
+      <div className="flex-1 py-2">
+        <div className="px-1">
+          <div className="mt-1 space-y-0.5">
             {items.map((item) => {
               if (
                 item.requiredRole && 
@@ -132,7 +133,7 @@ export default function SidebarBody() {
                         )}
                       </Button>
                     </CollapsibleTrigger>
-                    <CollapsibleContent className="ml-3 mt-1 space-y-1">
+                    <CollapsibleContent className="ml-2 mt-0.5 space-y-0.5">
                       {item.submenu.map((subItem) => (
                         <div key={subItem.href} onClick={closeMobileSidebar}>
                           <SidebarLink
@@ -140,6 +141,7 @@ export default function SidebarBody() {
                             icon={subItem.icon}
                             label={subItem.title}
                             isCollapsed={isCollapsed}
+                            id={subItem.href}
                           />
                         </div>
                       ))}
@@ -155,6 +157,7 @@ export default function SidebarBody() {
                     icon={item.icon}
                     label={item.title}
                     isCollapsed={isCollapsed}
+                    id={item.href}
                   />
                 </div>
               );
