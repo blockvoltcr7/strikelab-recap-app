@@ -3,7 +3,6 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { LogOut, User } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
-import { ThemeToggle } from "../theme-toggle";
 import { useToast } from "@/hooks/use-toast";
 
 interface SidebarUserProfileProps {
@@ -41,7 +40,6 @@ export const SidebarUserProfile = ({ userRole, isCollapsed }: SidebarUserProfile
         >
           <User className="h-4 w-4 text-primary-foreground" />
         </div>
-        <ThemeToggle />
         <Button 
           variant="ghost" 
           size="icon" 
@@ -71,7 +69,6 @@ export const SidebarUserProfile = ({ userRole, isCollapsed }: SidebarUserProfile
             </p>
           </div>
         </div>
-        <ThemeToggle />
       </div>
       <Button 
         variant="ghost" 

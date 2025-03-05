@@ -1,17 +1,5 @@
 
-import { MoonStar } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
+// This component has been removed as the app is now dark mode only
 export function ThemeToggle() {
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="rounded-full"
-      aria-label="Toggle theme"
-    >
-      <MoonStar className="h-[1.2rem] w-[1.2rem]" />
-      <span className="sr-only">Dark mode</span>
-    </Button>
-  );
+  return null;
 }
