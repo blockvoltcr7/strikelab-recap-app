@@ -57,16 +57,9 @@ const SidebarLink = ({ href, icon, label, className, id, isCollapsed = false }: 
 
         {/* Only render the label if not collapsed */}
         {!isCollapsed && (
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: { delay: 0.1 }
-            }}
-            className="inline-block whitespace-pre text-xs font-medium text-sidebar-foreground transition duration-150 group-hover:translate-x-1"
-          >
+          <span className="inline-block whitespace-pre text-xs font-medium text-sidebar-foreground transition duration-150 group-hover:translate-x-1">
             {label}
-          </motion.span>
+          </span>
         )}
       </div>
     </Link>
