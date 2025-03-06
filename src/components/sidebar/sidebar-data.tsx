@@ -1,8 +1,6 @@
 
 import {
   LayoutGrid,
-  Library,
-  Upload,
   Settings,
 } from "lucide-react";
 
@@ -22,27 +20,11 @@ export const getSidebarItems = (userRole?: string): SidebarItem[] => {
       icon: <LayoutGrid className="h-5 w-5" />,
     },
     {
-      title: "Video Library",
-      href: "/videos",
-      icon: <Library className="h-5 w-5" />,
+      title: "Settings",
+      href: "/settings",
+      icon: <Settings className="h-5 w-5" />,
     }
   ];
-
-  // Add admin/coach only items
-  if (userRole === 'admin' || userRole === 'coach') {
-    items.push({
-      title: "Video Management",
-      href: "/admin/videos/upload",
-      icon: <Upload className="h-5 w-5" />,
-      requiredRole: ['admin', 'coach'],
-    });
-  }
-
-  items.push({
-    title: "Settings",
-    href: "/settings",
-    icon: <Settings className="h-5 w-5" />,
-  });
 
   return items;
 };

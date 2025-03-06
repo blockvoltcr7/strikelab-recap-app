@@ -11,10 +11,6 @@ import Index from "./pages/Index";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import NotFound from "./pages/NotFound";
-import VideoLibrary from "./pages/videos/VideoLibrary";
-import VideoCategory from "./pages/videos/VideoCategory";
-import VideoManager from "./pages/videos/VideoManager";
-import VideoUpload from "./pages/admin/VideoUpload";
 import Home from "./pages/home/Home";
 
 const queryClient = new QueryClient();
@@ -42,10 +38,6 @@ const App = () => (
                 } 
               >
                 <Route index element={<Home />} />
-                <Route path="videos" element={<VideoLibrary />} />
-                <Route path="videos/:categoryId" element={<VideoCategory />} />
-                <Route path="videos/:categoryId/upload" element={<VideoManager />} />
-                <Route path="admin/videos/upload" element={<VideoUpload />} />
                 {/* Redirect /index to root path */}
                 <Route path="index" element={<Navigate to="/" replace />} />
               </Route>

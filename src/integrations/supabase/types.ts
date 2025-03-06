@@ -39,53 +39,6 @@ export type Database = {
         }
         Relationships: []
       }
-      videos: {
-        Row: {
-          category_id: string
-          created_at: string | null
-          created_by: string
-          description: string | null
-          duration: number | null
-          file_path: string
-          id: string
-          thumbnail_path: string | null
-          title: string
-          updated_at: string | null
-        }
-        Insert: {
-          category_id: string
-          created_at?: string | null
-          created_by: string
-          description?: string | null
-          duration?: number | null
-          file_path: string
-          id?: string
-          thumbnail_path?: string | null
-          title: string
-          updated_at?: string | null
-        }
-        Update: {
-          category_id?: string
-          created_at?: string | null
-          created_by?: string
-          description?: string | null
-          duration?: number | null
-          file_path?: string
-          id?: string
-          thumbnail_path?: string | null
-          title?: string
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "videos_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
     }
     Views: {
       [_ in never]: never
